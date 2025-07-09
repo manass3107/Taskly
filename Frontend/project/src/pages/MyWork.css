@@ -1,0 +1,115 @@
+.mywork-container {
+  max-width: 900px;
+  margin: 40px auto;
+  padding: 20px;
+  color: #f0f0f0;
+  background: #1c1c24;
+  border-radius: 10px;
+}
+
+.mywork-title {
+  font-size: 28px;
+  margin-bottom: 20px;
+  border-bottom: 2px solid #444;
+  padding-bottom: 10px;
+}
+
+.no-contracts {
+  text-align: center;
+  font-size: 16px;
+  color: #999;
+}
+
+.contract-card {
+  background: #2a2a35;
+  padding: 16px;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  box-shadow: 0 0 5px rgba(0,0,0,0.4);
+}
+
+.contract-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.contract-title {
+  font-size: 20px;
+  font-weight: bold;
+}
+
+.contract-status {
+  padding: 5px 10px;
+  border-radius: 20px;
+  font-size: 14px;
+  text-transform: capitalize;
+}
+
+.contract-status.ongoing {
+  background-color: #3b82f6;
+  color: white;
+}
+
+.contract-status.completed {
+  background-color: #22c55e;
+  color: white;
+}
+
+.contract-deadline {
+  font-size: 14px;
+  color: #aaa;
+  margin-top: 5px;
+}
+
+.progress-bar {
+  background-color: #444;
+  height: 8px;
+  border-radius: 5px;
+  overflow: hidden;
+  margin: 10px 0;
+}
+
+.progress-fill {
+  background-color: #4ade80;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+.progress-label {
+  font-size: 13px;
+  color: #ccc;
+  margin-bottom: 10px;
+}
+
+.milestone-list {
+  list-style: none;
+  padding-left: 0;
+  margin-bottom: 10px;
+}
+
+.milestone {
+  font-size: 14px;
+  padding: 4px 0;
+  color: #ccc;
+}
+
+.milestone.done {
+  text-decoration: line-through;
+  color: #22c55e;
+}
+
+.manage-btn {
+  display: inline-block;
+  margin-top: 10px;
+  padding: 8px 14px;
+  background-color: #6366f1;
+  color: white;
+  border-radius: 6px;
+  text-decoration: none;
+  font-size: 14px;
+}
+
+.manage-btn:hover {
+  background-color: #4f46e5;
+}

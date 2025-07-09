@@ -1,0 +1,93 @@
+.offers-container {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.offers-container h1 {
+  font-size: 2rem;
+  font-weight: bold;
+  color: #2c3e50;
+  margin-bottom: 1.5rem;
+}
+
+.task-card {
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  background-color: #f9f9f9;
+  transition: box-shadow 0.3s ease;
+}
+
+.task-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.task-card h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.task-card p {
+  margin: 0.3rem 0;
+}
+
+.task-card button {
+  margin-top: 0.7rem;
+  padding: 0.5rem 1rem;
+  background-color: #3498db;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.task-card button:hover {
+  background-color: #2980b9;
+}
+
+.offer-form {
+  margin-top: 2rem;
+  padding: 1rem;
+  border: 1px solid #aaa;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+.offer-form h2 {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+
+.offer-form input,
+.offer-form textarea {
+  width: 100%;
+  padding: 0.6rem;
+  margin-bottom: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+
+.offer-form button {
+  padding: 0.5rem 1rem;
+  background-color: #27ae60;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.offer-form button:hover {
+  background-color: #1e8449;
+}
+
+.offer-form .cancel-btn {
+  background: none;
+  color: #999;
+  border: none;
+  margin-left: 10px;
+  text-decoration: underline;
+  cursor: pointer;
+}

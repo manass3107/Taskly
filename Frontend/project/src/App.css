@@ -1,0 +1,187 @@
+body {
+  background-color: #121212;
+  color: #f0f0f0;
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  max-width: 1000px;
+  margin: 30px auto;
+  padding: 20px;
+}
+
+.card {
+  background-color: #1e1e1e;
+  border-radius: 12px;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+  transition: transform 0.3s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+}
+
+button {
+  background-color: #58a6ff;
+  color: #fff;
+  padding: 10px 20px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #1f6feb;
+}
+
+ul {
+  padding-left: 20px;
+}
+
+li {
+  margin-bottom: 8px;
+}
+
+h2, h3 {
+  margin-top: 0;
+  color: #58a6ff;
+}
+
+.error {
+  color: #ff4e4e;
+}
+/* Center the form on screen */
+.center-screen {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Dark form card styling */
+.form-card {
+  background-color: #1e1e1e;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 0 15px rgba(88, 166, 255, 0.2);
+  width: 350px;
+  color: #ffffff;
+}
+
+/* Input fields */
+.form-card input {
+  width: 100%;
+  padding: 12px 14px;
+  margin-bottom: 15px;
+  border-radius: 6px;
+  border: none;
+  background-color: #2b2b2b;
+  color: #fff;
+  font-size: 1rem;
+  outline: none;
+  transition: box-shadow 0.2s ease;
+}
+
+.form-card input:focus {
+  box-shadow: 0 0 0 2px #58a6ff;
+}
+
+/* Links */
+.form-card a {
+  color: #58a6ff;
+  text-decoration: none;
+}
+
+.form-card a:hover {
+  text-decoration: underline;
+}
+
+/* Buttons */
+.form-card button {
+  background-color: #58a6ff;
+  color: #fff;
+  padding: 12px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.form-card button:hover {
+  background-color: #1f6feb;
+}
+
+/* Error message */
+.error {
+  color: #ff4e4e;
+  margin-bottom: 10px;
+}
+/* Toggle Buttons */
+.task-toggle-btn {
+  padding: 8px 16px;
+  border: none;
+  cursor: pointer;
+  border-radius: 6px;
+  margin-right: 8px;
+  font-weight: 600;
+  background-color: #333;
+  color: #bbb;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.task-toggle-btn:hover {
+  background-color: #444;
+  transform: translateY(-1px);
+}
+
+.task-toggle-btn.active {
+  background-color: #007bff;
+  color: white;
+}
+
+/* Task List Layout */
+.task-card {
+  background: #1e1e1e;
+  border: 1px solid #333;
+  border-left: 4px solid #007bff;
+  border-radius: 8px;
+  padding: 16px;
+  margin-bottom: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.task-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0, 123, 255, 0.2);
+}
+
+.task-title {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 4px;
+}
+
+.task-desc {
+  font-size: 0.95rem;
+  color: #bbb;
+  margin-bottom: 6px;
+}
+
+.task-link {
+  color: #3498db;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+
+.task-link:hover {
+  text-decoration: underline;
+}
