@@ -3,6 +3,8 @@ const router = express.Router();
 const Offer = require('../models/Offer');
 const Task = require('../models/Task');
 const authMiddleware = require('../middleware/auth');
+const Contract = require('../models/Contract');
+
 
 // ✅ Accept an offer by offerId
 router.post('/:offerId/accept', authMiddleware, async (req, res) => {
@@ -30,11 +32,12 @@ router.post('/:offerId/accept', authMiddleware, async (req, res) => {
       return res.status(400).json({ error: 'A contract has already been created for this task' });
     }
 
-    const contract = new (require('../models/Contract'))({
+    console.log('Creating contract with:', {
       taskId: task._id,
       acceptedOffer: offer._id,
-      paymentTerms, // should be 'quarter', 'half', or 'full'
+      paymentTerms
     });
+
 
 
     await contract.save();
