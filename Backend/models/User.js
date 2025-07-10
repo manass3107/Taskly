@@ -45,6 +45,8 @@ const userSchema = new mongoose.Schema({
       reason: {
         type: String
       },
+      to: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+      from: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
       date: {
         type: Date,
         default: Date.now

@@ -16,7 +16,7 @@ const DashboardPage = () => {
 
     if (!token || !userId) {
       localStorage.clear(); // clean old data
-      navigate("/login");   // ✅ REPLACE window.location.href
+      navigate("/login");   
       return;
     }
 
@@ -34,7 +34,7 @@ const DashboardPage = () => {
       } catch (err) {
         console.error("Error:", err);
         localStorage.clear(); // clear broken session
-        navigate("/login");   // ✅
+        navigate("/login"); 
       } finally {
         setLoading(false);
       }
@@ -69,7 +69,7 @@ const DashboardPage = () => {
       localStorage.setItem('userEmail', data.user.email);
 
       alert(`✅ Switched to ${newRole}`);
-      navigate('/dashboard');  // ✅ REPLACE window.location.href
+      navigate('/dashboard');
     } catch (err) {
       console.error(err);
       alert(`❌ ${err.message}`);
