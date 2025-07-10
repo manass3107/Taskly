@@ -63,6 +63,7 @@ router.post('/:offerId/accept', authMiddleware, async (req, res) => {
     paymentTerms,
     milestones
   });
+  console.log('Contract being created with milestones:', milestones);
 
   await contract.save();
 

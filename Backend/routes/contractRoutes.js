@@ -162,6 +162,19 @@ router.post('/:contractId/milestones/:milestoneIndex/approve', authMiddleware, a
 
     poster.walletBalance -= paymentAmount;
     worker.walletBalance += paymentAmount;
+    poster.transactions.push({
+      type: 'debit',
+      amount: paymentAmount,
+      reason: `Milestone "${milestone.description}" approved for task: ${contract.taskId.title}`,
+      to: worker._id
+    });
+
+    worker.transactions.push({
+      type: 'credit',
+      amount: paymentAmount,
+      reason: `Received milestone payment for "${milestone.description}" of task: ${contract.taskId.title}`,
+      from: poster._id
+    });
 
     milestone.completed = true;
     milestone.completionRequested = false;
