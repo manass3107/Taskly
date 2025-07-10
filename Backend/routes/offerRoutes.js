@@ -37,11 +37,31 @@ router.post('/:offerId/accept', authMiddleware, async (req, res) => {
     acceptedOffer: offer._id,
     paymentTerms
   });
+  let milestones = [];
+
+    if (paymentTerms === 'quarter') {
+      milestones = [
+        { stage: '25%', description: 'First milestone' },
+        { stage: '50%', description: 'Second milestone' },
+        { stage: '75%', description: 'Third milestone' },
+        { stage: '100%', description: 'Final milestone' },
+      ];
+    } else if (paymentTerms === 'half') {
+      milestones = [
+        { stage: '50%', description: 'First half' },
+        { stage: '100%', description: 'Final half' },
+      ];
+    } else if (paymentTerms === 'full') {
+      milestones = [
+        { stage: '100%', description: 'Full payment after completion' },
+      ];
+    }
 
   const contract = new Contract({
     taskId: task._id,
     acceptedOffer: offer._id,
-    paymentTerms
+    paymentTerms,
+    milestones
   });
 
   await contract.save();
