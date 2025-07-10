@@ -4,12 +4,22 @@ const cors = require('cors');
 require('dotenv').config();
 
 const app = express();
-const allowedOrigins = ['http://localhost:3000', 'https://taskly-gold.vercel.app'];
-// Middleware
+
+// Allow both local and deployed frontend
+const allowedOrigins = [
+  'http://localhost:3000',
+  'https://taskly-gold.vercel.app'
+];
+
 app.use(cors({
-  origin: allowedOrigins,
-  credentials: true,
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true);
+    if (allowedOrigins.includes(origin)) return callback(null, true);
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true
 }));
+
 app.use(express.json());
 
 // Route Imports
