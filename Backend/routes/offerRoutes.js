@@ -4,48 +4,52 @@ const Offer = require('../models/Offer');
 const Task = require('../models/Task');
 const authMiddleware = require('../middleware/auth');
 
-// Worker applies an offer on a task
-router.post('/:taskId/apply-offer', authMiddleware, async (req, res) => {
+// ✅ Accept an offer by offerId
+router.post('/:offerId/accept', authMiddleware, async (req, res) => {
   try {
-    if (req.user.role !== 'worker') {
-      return res.status(403).json({ error: 'Only workers can apply for offers' });
+    const { offerId } = req.params;
+    const { paymentTerms } = req.body;
+
+    // Only posters can accept offers
+    if (req.user.role !== 'poster') {
+      return res.status(403).json({ error: 'Only posters can accept offers' });
     }
 
-    const { proposedFee, message } = req.body;
-    const { taskId } = req.params;
+    const offer = await Offer.findById(offerId).populate('taskId offeredBy');
+    if (!offer) return res.status(404).json({ error: 'Offer not found' });
 
-    if (!proposedFee || proposedFee <= 0) {
-      return res.status(400).json({ error: 'Proposed fee must be positive' });
+    const task = offer.taskId;
+
+    if (!task || task.postedBy.toString() !== req.user._id.toString()) {
+      return res.status(403).json({ error: 'You are not authorized to accept this offer' });
     }
 
-    const task = await Task.findById(taskId);
-    if (!task) return res.status(404).json({ error: 'Task not found' });
-
-    if (task.postedBy.toString() === req.user._id.toString()) {
-      return res.status(400).json({ error: 'Cannot apply offer on your own task' });
+    // Check if a contract already exists for this task
+    const existingContract = await require('../models/Contract').findOne({ task: task._id });
+    if (existingContract) {
+      return res.status(400).json({ error: 'A contract has already been created for this task' });
     }
 
-    const existing = await Offer.findOne({ taskId, offeredBy: req.user._id });
-    if (existing) {
-      return res.status(400).json({ error: 'You have already applied an offer for this task' });
-    }
-
-    const offer = new Offer({
-      taskId,
-      offeredBy: req.user._id,
-      proposedFee,
-      message
+    // Create a new contract
+    const contract = new (require('../models/Contract'))({
+      task: task._id,
+      poster: task.postedBy,
+      worker: offer.offeredBy._id,
+      offer: offer._id,
+      status: 'active',
+      paymentTerms
     });
 
-    await offer.save();
-    task.offers.push(offer._id);
-    await task.save();
+    await contract.save();
 
-    res.status(201).json({ message: 'Offer applied successfully', offer });
+    res.status(200).json({ message: 'Offer accepted and contract created', contract });
   } catch (err) {
-    res.status(500).json({ error: err.message });
+    console.error('Error in accept-offer:', err);
+    res.status(500).json({ error: 'Server error while accepting offer' });
   }
 });
+
+
 
 // Poster views all offers for a specific task
 router.get('/task/:taskId', authMiddleware, async (req, res) => {
@@ -67,7 +71,8 @@ router.get('/task/:taskId', authMiddleware, async (req, res) => {
   }
 });
 
-// Poster accepts offer and creates contract
+
+// Worker applies an offer on a task
 router.post('/:taskId/apply-offer', authMiddleware, async (req, res) => {
   try {
     if (req.user.role !== 'worker') {
