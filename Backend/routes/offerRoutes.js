@@ -33,16 +33,21 @@ router.post('/:offerId/accept', authMiddleware, async (req, res) => {
     }
 
     console.log('Creating contract with:', {
-      taskId: task._id,
-      acceptedOffer: offer._id,
-      paymentTerms
-    });
+    taskId: task._id,
+    acceptedOffer: offer._id,
+    paymentTerms
+  });
 
+  const contract = new Contract({
+    taskId: task._id,
+    acceptedOffer: offer._id,
+    paymentTerms
+  });
 
+  await contract.save();
 
-    await contract.save();
+  res.status(200).json({ message: 'Offer accepted and contract created', contract });
 
-    res.status(200).json({ message: 'Offer accepted and contract created', contract });
   } catch (err) {
     console.error('Error in accept-offer:', err);
     res.status(500).json({ error: 'Server error while accepting offer' });
