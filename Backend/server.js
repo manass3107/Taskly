@@ -13,12 +13,19 @@ const allowedOrigins = [
 
 app.use(cors({
   origin: function (origin, callback) {
-    if (!origin) return callback(null, true);
-    if (allowedOrigins.includes(origin)) return callback(null, true);
-    return callback(new Error('Not allowed by CORS'));
+    const allowedOrigins = [
+      'http://localhost:3000',
+      'https://taskly-gold.vercel.app'
+    ];
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error('CORS not allowed for this origin: ' + origin));
+    }
   },
-  credentials: true
+  credentials: true,
 }));
+
 
 app.use(express.json());
 
