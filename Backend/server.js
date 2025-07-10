@@ -40,7 +40,7 @@ app.get('/', (req, res) => {
 app.use((req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
-
+console.log('MONGO_URL:', process.env.MONGO_URL);
 // Connect MongoDB
 mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
@@ -53,6 +53,7 @@ mongoose.connect(process.env.MONGO_URL, {
 // Start Server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`✅ Server running on port ${PORT}`));
+
 
 // Graceful error handlers
 process.on('unhandledRejection', (reason, promise) => {
