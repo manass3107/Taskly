@@ -57,7 +57,6 @@ app.get('/', (req, res) => {
 app.use((req, res) => {
   res.status(404).json({ error: 'Not found' });
 });
-console.log('MONGO_URL:', process.env.MONGO_URL);
 // Connect MongoDB
 mongoose.connect(process.env.MONGO_URL, {
   useNewUrlParser: true,
