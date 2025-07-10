@@ -30,15 +30,12 @@ router.post('/:offerId/accept', authMiddleware, async (req, res) => {
       return res.status(400).json({ error: 'A contract has already been created for this task' });
     }
 
-    // Create a new contract
     const contract = new (require('../models/Contract'))({
-      task: task._id,
-      poster: task.postedBy,
-      worker: offer.offeredBy._id,
-      offer: offer._id,
-      status: 'active',
-      paymentTerms
+      taskId: task._id,
+      acceptedOffer: offer._id,
+      paymentTerms, // should be 'quarter', 'half', or 'full'
     });
+
 
     await contract.save();
 
