@@ -49,20 +49,16 @@ Taskly/
 
 ### 1. Clone the repo
 
-``bash
 git clone https://github.com/manass3107/Taskly.git
 cd Taskly
 2. Setup Backend
-bash
-Copy
-Edit
+
 cd backend
 npm install
 Create a .env file:
 
 env
-Copy
-Edit
+
 PORT=5000
 MONGODB_URI=your_mongodb_connection_string
 JWT_SECRET=your_jwt_secret
@@ -74,9 +70,7 @@ Edit
 npm start
 
 3. Setup Frontend
-bash
-Copy
-Edit
+
 cd ../frontend
 npm install
 npm start
