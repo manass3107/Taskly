@@ -24,7 +24,7 @@ Here are some snapshots of **Taskly** in action:
 
 ### 🔐 Authentication
 - **Login Page**  
-  ![Login](https://raw.githubusercontent.com/manass3107/taskly/main/public/screenshots/Login.png)
+![Login](https://taskly-gold.vercel.app/screenshots/Login.png)
 
 - **Signup Page**  
   ![Signup](https://raw.githubusercontent.com/manass3107/taskly/main/public/screenshots/Signup.png)
