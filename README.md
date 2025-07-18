@@ -20,31 +20,26 @@
 
 ## 📸 Screenshots
 
-Here are some snapshots of **Taskly** in action:
-
-### 🔐 Authentication
-- **Login Page**  
+### 🔐 Login Page
 ![Login](https://taskly-gold.vercel.app/screenshots/Login.png)
 
-- **Signup Page**  
-  ![Signup](https://raw.githubusercontent.com/manass3107/taskly/main/public/screenshots/Signup.png)
+### 📝 Signup Page
+![Signup](https://taskly-gold.vercel.app/screenshots/Signup.png)
 
-### 🧾 Core Features
-- **Dashboard Overview**  
-  ![Dashboard](https://raw.githubusercontent.com/manass3107/taskly/main/public/screenshots/Dashboard.png)
+### 🏠 Dashboard
+![Dashboard](https://taskly-gold.vercel.app/screenshots/Dashboard.png)
 
-- **Create a Task**  
-  ![Create a Task](https://raw.githubusercontent.com/manass3107/taskly/main/public/screenshots/Create%20a%20Task.png)
+### 📌 Create a Task
+![Create a Task](https://taskly-gold.vercel.app/screenshots/Create%20a%20Task.png)
 
-- **Open Jobs Listing**  
-  ![Open Jobs](https://raw.githubusercontent.com/manass3107/taskly/main/public/screenshots/Open%20Jobs.png)
+### 📂 Open Jobs
+![Open Jobs](https://taskly-gold.vercel.app/screenshots/Open%20Jobs.png)
 
-- **Contract Details**  
-  ![ContractDetails](https://raw.githubusercontent.com/manass3107/taskly/main/public/screenshots/ContractDetails.png)
+### 💼 Contract Details
+![Contract Details](https://taskly-gold.vercel.app/screenshots/ContractDetails.png)
 
-- **Wallet / Earnings Page**  
-  ![Wallet](https://raw.githubusercontent.com/manass3107/taskly/main/public/screenshots/Wallet.png)
-
+### 💰 Wallet
+![Wallet](https://taskly-gold.vercel.app/screenshots/Wallet.png)
 
 ---
 
