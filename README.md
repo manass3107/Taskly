@@ -18,12 +18,33 @@
 
 ---
 
-## 🖼️ Preview
+## 📸 Screenshots
 
-> _Screenshots folder: `/frontend/public/screenshots`_
+Here are some snapshots of **Taskly** in action:
 
-![Dashboard](./frontend/public/screenshots/dashboard.png)  
-![Wallet](./frontend/public/screenshots/wallet.png)
+### 🔐 Authentication
+- **Login Page**  
+  ![Login](https://raw.githubusercontent.com/manass3107/taskly/main/public/screenshots/Login.png)
+
+- **Signup Page**  
+  ![Signup](https://raw.githubusercontent.com/manass3107/taskly/main/public/screenshots/Signup.png)
+
+### 🧾 Core Features
+- **Dashboard Overview**  
+  ![Dashboard](https://raw.githubusercontent.com/manass3107/taskly/main/public/screenshots/Dashboard.png)
+
+- **Create a Task**  
+  ![Create a Task](https://raw.githubusercontent.com/manass3107/taskly/main/public/screenshots/Create%20a%20Task.png)
+
+- **Open Jobs Listing**  
+  ![Open Jobs](https://raw.githubusercontent.com/manass3107/taskly/main/public/screenshots/Open%20Jobs.png)
+
+- **Contract Details**  
+  ![ContractDetails](https://raw.githubusercontent.com/manass3107/taskly/main/public/screenshots/ContractDetails.png)
+
+- **Wallet / Earnings Page**  
+  ![Wallet](https://raw.githubusercontent.com/manass3107/taskly/main/public/screenshots/Wallet.png)
+
 
 ---
 
