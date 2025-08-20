@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './MilestoneActions.css'; 
+import '../style/MilestoneActions.css'; 
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
 const MilestoneActions = ({ contractId, milestones, taskPosterId, refreshTask }) => {

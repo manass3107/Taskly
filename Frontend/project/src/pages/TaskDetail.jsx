@@ -3,7 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import MilestoneActions from '../pages/MilestoneActions';
 import ContractCompletionButton from '../pages/ContractCompletionButton';
 import OfferForm from '../pages/OfferForm';
-import '../pages/TaskDetail.css';
+import '../style/TaskDetail.css';
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
 const TaskDetail = () => {

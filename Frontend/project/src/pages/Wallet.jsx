@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Wallet.css';
+import '../style/Wallet.css';
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
 const Wallet = () => {

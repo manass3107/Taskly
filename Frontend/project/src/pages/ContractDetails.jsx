@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import MilestoneActions from './MilestoneActions';
-import './ContractDetails.css';
+import '../style/ContractDetails.css';
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
 function ContractDetails() {

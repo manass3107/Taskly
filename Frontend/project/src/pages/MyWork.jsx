@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import './MyWork.css'; 
+import '../style/MyWork.css'; 
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
 function MyWork() {

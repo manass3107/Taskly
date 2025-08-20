@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import './Offers.css';
+import '../style/Offers.css';
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
 function Offers() {

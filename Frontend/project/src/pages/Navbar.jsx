@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import { FaWallet, FaTasks, FaUserCircle, FaSignOutAlt, FaClipboardList, FaBriefcase, FaExchangeAlt } from 'react-icons/fa';
-import './Navbar.css'; 
+import '../style/Navbar.css'; 
 
 
 const Navbar = ({ user, onLogout }) => {

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import './AcceptOffer.css';
+import '../style/AcceptOffer.css';
 
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 

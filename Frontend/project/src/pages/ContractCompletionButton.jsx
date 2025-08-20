@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
 const ContractCompletionButton = ({ contractId, allMilestonesComplete, taskPosterId, refreshTask }) => {
@@ -6,12 +7,12 @@ const ContractCompletionButton = ({ contractId, allMilestonesComplete, taskPoste
   const [error, setError] = useState('');
   const currentUserId = localStorage.getItem('userId');
   const isTaskPoster = currentUserId === taskPosterId;
-
+  const navigate = useNavigate();
+  
   const handleCompleteContract = async () => {
     const token = localStorage.getItem('token');
     if (!token) {
       setError('You must be logged in to complete a contract.');
-      // You might want to redirect to login here
       return;
     }
 
@@ -34,9 +35,8 @@ const ContractCompletionButton = ({ contractId, allMilestonesComplete, taskPoste
       }
 
       setMessage('✅ Contract and Task marked as completed! Final payout processed.');
-      refreshTask(); // Refresh the task data to update UI
-      // Optional: Redirect to a dashboard or completed tasks page
-      // navigate('/dashboard');
+      refreshTask(); 
+      navigate('/dashboard');
 
     } catch (err) {
       console.error('Error completing contract:', err);

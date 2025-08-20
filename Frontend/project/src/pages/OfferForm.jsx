@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './OfferForm.css'; // make sure to create this file or include in TaskDetail.css
+import '../style/OfferForm.css'; // make sure to create this file or include in TaskDetail.css
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
 const OfferForm = ({ taskId }) => {

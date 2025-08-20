@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './CreateTaskPage.css';
+import '../style/CreateTaskPage.css';
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
 const CreateTaskPage = () => {
