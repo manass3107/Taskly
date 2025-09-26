@@ -27,7 +27,7 @@ const DashboardLayout = ({ children }) => {
         });
         setUser(res.data);
 
-        // ✅ Keep localStorage in sync
+        // Keep localStorage in sync
         localStorage.setItem("user", JSON.stringify(res.data));
         localStorage.setItem("userName", res.data.name);
         localStorage.setItem("userEmail", res.data.email);
@@ -47,9 +47,13 @@ const DashboardLayout = ({ children }) => {
   };
 
   return (
-    <div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <Navbar user={user} onLogout={handleLogout} />
-      <div className="p-4">{children}</div>
+      <div className="p-4">
+        <div className="max-w-7xl mx-auto">
+          {children}
+        </div>
+      </div>
     </div>
   );
 };
