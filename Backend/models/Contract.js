@@ -33,7 +33,7 @@ const contractSchema = new mongoose.Schema({
   },
   disputeBy: {
     type: String,
-    enum: ['poster', 'worker'], // standardized
+    enum: ['poster', 'worker'], 
     default: null
   },
   status: {

@@ -27,7 +27,8 @@ router.get('/view/:contractId', authMiddleware, async (req, res) => {
     const isPoster = contract.taskId.postedBy._id.toString() === userId.toString();
     const isImplementer = contract.acceptedOffer.offeredBy._id.toString() === userId.toString();
 
-    if (!isPoster && !isImplementer) {
+    if (!isPoster && !isImplementer) 
+    {
       return res.status(403).json({ error: 'Not authorized to view this contract.' });
     }
 

@@ -5,7 +5,8 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
 // SIGNUP
-router.post('/signup', async (req, res) => {
+router.post('/signup', async (req, res) => 
+{
   try {
     const { name, email, password, role } = req.body;
 
@@ -14,7 +15,7 @@ router.post('/signup', async (req, res) => {
       return res.status(400).json({ error: 'User already exists' });
     }
 
-    const hashedPassword = await bcrypt.hash(password, 10); // ✅ this line is crucial
+    const hashedPassword = await bcrypt.hash(password, 10); 
 
     const user = new User({
       name,
@@ -25,12 +26,7 @@ router.post('/signup', async (req, res) => {
 
     await user.save();
 
-    // Send JWT token back
-    const token = jwt.sign(
-  { _id: user._id, role: user.role }, 
-  process.env.JWT_SECRET
-);
-
+    const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET);
 
     res.status(201).json({
       token,
@@ -68,11 +64,7 @@ router.post('/login', async (req, res) => {
 
     if (!isMatch) return res.status(400).json({ error: 'Invalid credentials' });
 
-    const token = jwt.sign(
-  { _id: user._id, role: user.role }, 
-  process.env.JWT_SECRET
-);
-
+    const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET);
 
     res.json({ 
       token, 

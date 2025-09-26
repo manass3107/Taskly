@@ -25,7 +25,7 @@ const supportTicketSchema = new mongoose.Schema({
     type: String,
     trim: true,
     default: ''
-  }, // You can treat this as an optional image/pdf URL or file path
+  }, 
   status: {
     type: String,
     enum: ['open', 'resolved'],
@@ -36,6 +36,6 @@ const supportTicketSchema = new mongoose.Schema({
     default: '',
     trim: true
   }
-}, { timestamps: true }); // adds createdAt + updatedAt
+}, { timestamps: true }); 
 
 module.exports = mongoose.model('SupportTicket', supportTicketSchema);
