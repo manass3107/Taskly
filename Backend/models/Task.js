@@ -12,7 +12,7 @@ const taskSchema = new mongoose.Schema({
   },
   componentType: {
     type: String,
-    enum: ['backend', 'frontend', 'db', 'deployment'],
+    enum: ['Backend', 'Frontend', 'Database', 'Deployment','Full Stack'],
     required: true
   },
   participationFee: {

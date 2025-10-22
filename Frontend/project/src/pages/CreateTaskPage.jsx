@@ -156,7 +156,7 @@ const CreateTaskPage = () => {
                   type="text"
                   value={componentType}
                   onChange={(e) => setComponentType(e.target.value)}
-                  placeholder="e.g., Web Development, Mobile App..."
+                  placeholder="e.g. Backend, Frontend, Database,Deployment,Full Stack"
                   className="w-full px-4 py-4 bg-black/30 border border-white/20 rounded-xl text-white placeholder-purple-300 focus:border-blue-400 focus:ring-2 focus:ring-blue-400/30 focus:outline-none transition-all duration-300"
                 />
               </div>
