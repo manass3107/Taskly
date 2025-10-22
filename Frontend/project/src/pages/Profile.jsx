@@ -5,7 +5,7 @@ function Profile() {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const API_BASE = import.meta.env.REACT_APP_API || 'http://localhost:5000';
+    const API_BASE = process.env.REACT_APP_API || 'http://localhost:5000';
 
     fetch(`${API_BASE}/api/profile`, {
       headers: {
