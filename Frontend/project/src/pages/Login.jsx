@@ -51,7 +51,7 @@ function Login() {
             </svg>
           </div>
           <h2 className="text-4xl font-bold text-white mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-            Welcome Back
+            Welcome!
           </h2>
           <p className="text-purple-200">Sign in to your account</p>
         </div>

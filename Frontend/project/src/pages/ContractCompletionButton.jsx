@@ -7,8 +7,6 @@ const ContractCompletionButton = ({ contractId, allMilestonesComplete, taskPoste
   const [error, setError] = useState('');
   const currentUserId = localStorage.getItem('userId');
   const isTaskPoster = currentUserId === taskPosterId;
-  // Replace with your original:
-  // const navigate = useNavigate();
   const navigate = () => {};
   
   const handleCompleteContract = async () => {
@@ -47,7 +45,7 @@ const ContractCompletionButton = ({ contractId, allMilestonesComplete, taskPoste
   };
 
   if (!isTaskPoster) {
-    return null; // Only show button for the task poster
+    return null; 
   }
 
   return (

@@ -2,9 +2,7 @@ import React, { useState, useEffect } from 'react';
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
 function Signup() {
-  // const navigate = useNavigate();
   const navigate = (path) => {
-    // Mock navigation for artifact - replace with actual useNavigate() in your app
     console.log(`Navigating to: ${path}`);
     window.location.href = path;
   };

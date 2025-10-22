@@ -30,7 +30,9 @@ router.post('/', authMiddleware, async (req, res) => {
 // Public: Get all tasks
 router.get('/', async (req, res) => {
   try {
-    const tasks = await Task.find().populate('postedBy', 'name email');
+    const tasks = await Task.find()
+      .populate('postedBy', 'name email')
+      .sort({ createdAt: -1 });
     res.json(tasks);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -40,7 +42,12 @@ router.get('/', async (req, res) => {
 // Public: Get all open tasks
 router.get('/open', async (req, res) => {
   try {
-    const tasks = await Task.find({ status: 'open' }).populate('postedBy', 'name email');
+    const tasks = await Task.find({ 
+      status: 'open',
+      deadline: { $gte: new Date() }
+    })
+      .populate('postedBy', 'name email')
+      .sort({ createdAt: -1 });
     res.json(tasks);
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -50,14 +57,14 @@ router.get('/open', async (req, res) => {
 // Poster: Get their own tasks
 router.get('/my-tasks', authMiddleware, async (req, res) => {
   try {
-    const myTasks = await Task.find({ postedBy: req.user._id });
+    const myTasks = await Task.find({ postedBy: req.user._id })
+      .sort({ createdAt: -1 });
     res.json(myTasks);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// View full task detail (requires login)
 router.get('/:taskId', authMiddleware, async (req, res) => {
   try {
     const task = await Task.findById(req.params.taskId)

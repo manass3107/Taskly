@@ -63,7 +63,7 @@ router.get('/analytics', auth, async (req, res) => {
   }
 });
 
-// 💰 POST wallet top-up
+// POST wallet top-up
 router.post('/topup', auth, async (req, res) => {
   try {
     const amount = Number(req.body.amount);
@@ -90,7 +90,7 @@ router.post('/topup', auth, async (req, res) => {
   }
 });
 
-// 🧾 GET user transactions
+// GET user transactions
 router.get('/transactions', auth, async (req, res) => {
   try {
     const user = await User.findById(req.user._id);
@@ -161,8 +161,6 @@ router.put('/:id/switch-role', auth, async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 });
-
-
 
 
 router.get('/:id', async (req, res) => {
