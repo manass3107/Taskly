@@ -3,23 +3,24 @@ import React, { useEffect, useState } from 'react';
 function Profile() {
   const [profile, setProfile] = useState(null);
   const [error, setError] = useState(null);
-  
 
   useEffect(() => {
-    fetch('/api/profile', {
+    const API_BASE = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+    fetch(`${API_BASE}/api/profile`, {
       headers: {
-        Authorization: `Bearer ${localStorage.getItem('token')}`
-      }
+        Authorization: `Bearer ${localStorage.getItem('token')}`,
+      },
     })
-    .then(res => {
-      if (!res.ok) throw new Error('Failed to fetch profile');
-      return res.json();
-    })
-    .then(data => setProfile(data))
-    .catch(err => {
-      console.error('Failed to fetch profile', err);
-      setError('Failed to load profile');
-    });
+      .then((res) => {
+        if (!res.ok) throw new Error('Failed to fetch profile');
+        return res.json();
+      })
+      .then((data) => setProfile(data))
+      .catch((err) => {
+        console.error('Failed to fetch profile:', err);
+        setError('Failed to load profile');
+      });
   }, []);
 
   // Error State
@@ -30,8 +31,18 @@ function Profile() {
           <div className="flex items-center justify-center min-h-[60vh]">
             <div className="bg-red-500/20 text-red-300 border border-red-500/30 rounded-xl p-6 text-center max-w-md">
               <div className="w-12 h-12 bg-red-500/30 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <svg className="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                <svg
+                  className="w-6 h-6 text-red-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
                 </svg>
               </div>
               <p className="font-medium">{error}</p>
@@ -52,7 +63,13 @@ function Profile() {
               <div className="relative w-16 h-16 mx-auto mb-6">
                 <div className="absolute inset-0 rounded-full border-4 border-purple-500/30"></div>
                 <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-purple-500 animate-spin"></div>
-                <div className="absolute inset-2 rounded-full border-2 border-transparent border-t-pink-400 animate-spin" style={{ animationDirection: 'reverse', animationDuration: '0.8s' }}></div>
+                <div
+                  className="absolute inset-2 rounded-full border-2 border-transparent border-t-pink-400 animate-spin"
+                  style={{
+                    animationDirection: 'reverse',
+                    animationDuration: '0.8s',
+                  }}
+                ></div>
               </div>
               <p className="text-purple-200 font-medium">Loading your profile...</p>
             </div>
@@ -62,6 +79,7 @@ function Profile() {
     );
   }
 
+  // ✅ Main Profile UI
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       <div className="max-w-4xl mx-auto px-4 py-8">
@@ -83,7 +101,11 @@ function Profile() {
               </div>
               <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-green-500 rounded-full border-4 border-slate-900 flex items-center justify-center">
                 <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                  <path
+                    fillRule="evenodd"
+                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                    clipRule="evenodd"
+                  />
                 </svg>
               </div>
             </div>
@@ -93,9 +115,9 @@ function Profile() {
             </span>
           </div>
 
-          {/* Profile Information Grid */}
+          {/* Profile Info */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {/* Personal Information */}
+            {/* Personal Info */}
             <div className="bg-black/20 rounded-xl p-6">
               <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
                 <svg className="w-5 h-5 text-purple-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -115,7 +137,7 @@ function Profile() {
               </div>
             </div>
 
-            {/* Wallet Information */}
+            {/* Wallet Info */}
             <div className="bg-black/20 rounded-xl p-6">
               <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
                 <svg className="w-5 h-5 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -132,7 +154,7 @@ function Profile() {
             </div>
           </div>
 
-          {/* Additional Actions */}
+          {/* Actions */}
           <div className="mt-8 pt-6 border-t border-white/10">
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-medium py-3 px-8 rounded-xl hover:scale-[1.02] hover:shadow-xl transition-all duration-300 flex items-center justify-center">
