@@ -45,7 +45,7 @@ const taskSchema = new mongoose.Schema({
   },
   status: {
     type: String,
-    enum: ['open', 'in-progress', 'completed', 'disputed', 'closed'],
+    enum: ['open', 'in-progress', 'completed', 'disputed', 'closed', 'expired'],
     default: 'open'
   },
   budget: { type: Number, required: true },

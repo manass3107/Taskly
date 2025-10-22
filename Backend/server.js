@@ -40,7 +40,7 @@ app.use('/api/auth', authRoutes);
 // ✅ Protected Routes
 app.use('/api/users', authMiddleware, userRoutes);
 app.use('/api/profile', authMiddleware, profileRoutes);
-app.use('/api/tasks', authMiddleware, taskRoutes);
+app.use('/api/tasks', taskRoutes);
 app.use('/api/offers', authMiddleware, offerRoutes);
 app.use('/api/contracts', authMiddleware, contractRoutes);
 
