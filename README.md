@@ -360,17 +360,6 @@ Contributions are what make the open-source community amazing! Any contributions
 - Test your changes thoroughly
 - Update documentation if needed
 
----
-
-## 🐛 Known Issues
-
-- Payment transfers currently lack MongoDB transaction support (planned for next release)
-- Auto-rejection of other offers when one is accepted needs implementation
-- JWT tokens don't expire (refresh token mechanism planned)
-
-See the [open issues](https://github.com/manass3107/Taskly/issues) for a full list of proposed features and known issues.
-
----
 
 ## 📄 License
 
@@ -380,7 +369,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 👨‍💻 Author
 
-**Manas Singh**
+**Manas Sharma**
 
 - GitHub: [@manass3107](https://github.com/manass3107)
 - Project Link: [https://github.com/manass3107/Taskly](https://github.com/manass3107/Taskly)
