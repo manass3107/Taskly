@@ -1,4 +1,4 @@
-# 🚀 Taskly - Decentralized Freelance Marketplace
+# 🚀 Taskly -Modern Freelance Marketplace
 
 <div align="center">
 
