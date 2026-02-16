@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams } from 'react-router-dom';
 import MilestoneActions from './MilestoneActions';
 
@@ -9,7 +9,7 @@ function ContractDetails() {
   const [contract, setContract] = useState(null);
   const [error, setError] = useState('');
 
-  const fetchContract = async () => {
+  const fetchContract = useCallback(async () => {
     try {
       const token = localStorage.getItem('token');
       const res = await fetch(`${API_BASE}/api/contracts/view/${contractId}`, {
@@ -25,7 +25,7 @@ function ContractDetails() {
       console.error(err);
       setError(err.message);
     }
-  };
+  }, [contractId]);
 
   useEffect(() => {
     fetchContract();

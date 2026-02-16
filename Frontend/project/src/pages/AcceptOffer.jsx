@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
@@ -16,16 +16,7 @@ function AcceptOffer() {
   const [selectedOffer, setSelectedOffer] = useState(null);
   const [actionType, setActionType] = useState(null); // 'accept' or 'reject'
 
-  useEffect(() => {
-    const token = localStorage.getItem('token');
-    if (!token) {
-      navigate('/login');
-      return;
-    }
-    fetchOffers(token);
-  }, [taskId, navigate, fetchOffers]);
-
-  const fetchOffers = async (token) => {
+  const fetchOffers = useCallback(async (token) => {
     try {
       const res = await fetch(`${API_BASE}/api/offers/task/${taskId}`, {
         headers: {
@@ -49,7 +40,16 @@ function AcceptOffer() {
     } finally {
       setLoading(false);
     }
-  };
+  }, [taskId, navigate]);
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) {
+      navigate('/login');
+      return;
+    }
+    fetchOffers(token);
+  }, [navigate, fetchOffers]);
 
   const confirmAction = (offer, type) => {
     setSelectedOffer(offer);
@@ -275,8 +275,8 @@ function AcceptOffer() {
             <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 max-w-md w-full animate-modal-in">
               <div className="text-center">
                 <div className={`w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center ${actionType === 'accept'
-                    ? 'bg-gradient-to-br from-green-500 to-emerald-500'
-                    : 'bg-gradient-to-br from-red-500 to-pink-500'
+                  ? 'bg-gradient-to-br from-green-500 to-emerald-500'
+                  : 'bg-gradient-to-br from-red-500 to-pink-500'
                   }`}>
                   {actionType === 'accept' ? (
                     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -308,8 +308,8 @@ function AcceptOffer() {
                   </button>
                   <button
                     className={`flex-1 font-semibold py-3 px-6 rounded-xl transition-all duration-300 ${actionType === 'accept'
-                        ? 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white'
-                        : 'bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-400 hover:to-pink-400 text-white'
+                      ? 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white'
+                      : 'bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-400 hover:to-pink-400 text-white'
                       }`}
                     onClick={handleConfirm}
                   >
