@@ -12,11 +12,6 @@ router.post('/:offerId/accept', authMiddleware, async (req, res) => {
     const { offerId } = req.params;
     const { paymentTerms } = req.body;
 
-    // Only posters can accept offers
-    if (req.user.role !== 'poster') {
-      return res.status(403).json({ error: 'Only posters can accept offers' });
-    }
-
     const offer = await Offer.findById(offerId).populate('taskId offeredBy');
     if (!offer) return res.status(404).json({ error: 'Offer not found' });
 
@@ -33,11 +28,11 @@ router.post('/:offerId/accept', authMiddleware, async (req, res) => {
     }
 
     console.log('Creating contract with:', {
-    taskId: task._id,
-    acceptedOffer: offer._id,
-    paymentTerms
-  });
-  let milestones = [];
+      taskId: task._id,
+      acceptedOffer: offer._id,
+      paymentTerms
+    });
+    let milestones = [];
 
     if (paymentTerms === 'quarter') {
       milestones = [
@@ -57,17 +52,17 @@ router.post('/:offerId/accept', authMiddleware, async (req, res) => {
       ];
     }
 
-  const contract = new Contract({
-    taskId: task._id,
-    acceptedOffer: offer._id,
-    paymentTerms,
-    milestones
-  });
-  console.log('Contract being created with milestones:', milestones);
+    const contract = new Contract({
+      taskId: task._id,
+      acceptedOffer: offer._id,
+      paymentTerms,
+      milestones
+    });
+    console.log('Contract being created with milestones:', milestones);
 
-  await contract.save();
+    await contract.save();
 
-  res.status(200).json({ message: 'Offer accepted and contract created', contract });
+    res.status(200).json({ message: 'Offer accepted and contract created', contract });
 
   } catch (err) {
     console.error('Error in accept-offer:', err);
@@ -101,10 +96,6 @@ router.get('/task/:taskId', authMiddleware, async (req, res) => {
 // Worker applies an offer on a task
 router.post('/:taskId/apply-offer', authMiddleware, async (req, res) => {
   try {
-    if (req.user.role !== 'worker') {
-      return res.status(403).json({ error: 'Only workers can apply for offers' });
-    }
-
     const { proposedFee, message } = req.body;
     const { taskId } = req.params;
 

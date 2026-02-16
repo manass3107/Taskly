@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import './App.css';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
@@ -18,6 +18,21 @@ import MyPostedContracts from './pages/MyPostedContracts';
 import MyWork from './pages/MyWork';
 import ContractDetails from './pages/ContractDetails';
 import Profile from './pages/Profile';
+import LandingPage from './pages/LandingPage';
+
+// Simple auth check wrapper
+const ProtectedRoute = ({ children }) => {
+  const token = localStorage.getItem('token');
+  if (!token) return <Navigate to="/login" replace />;
+  return children;
+};
+
+// Public route wrapper (redirects to dashboard if already logged in)
+const PublicRoute = ({ children }) => {
+  const token = localStorage.getItem('token');
+  if (token) return <Navigate to="/dashboard" replace />;
+  return children;
+};
 
 function App() {
   return (
@@ -27,130 +42,170 @@ function App() {
         <Route
           path="/"
           element={
-            <DashboardLayout>
-              <Dashboard />
-            </DashboardLayout>
+            <PublicRoute>
+              <LandingPage />
+            </PublicRoute>
           }
         />
 
-        <Route path="/login" element={<Login />} />
-        <Route path="/signup" element={<Signup />} />
+        <Route
+          path="/login"
+          element={
+            <PublicRoute>
+              <Login />
+            </PublicRoute>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <PublicRoute>
+              <Signup />
+            </PublicRoute>
+          }
+        />
 
-        {/* Protected Routes (with layout including Navbar + user info) */}
+        {/* Protected Routes */}
         <Route
           path="/dashboard"
           element={
-            <DashboardLayout>
-              <Dashboard />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Dashboard />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/create-task"
           element={
-            <DashboardLayout>
-              <CreateTaskPage />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <CreateTaskPage />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/offers"
           element={
-            <DashboardLayout>
-              <Offers />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Offers />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/tasks"
           element={
-            <DashboardLayout>
-              <TasksPage />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <TasksPage />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/tasks/:taskId"
           element={
-            <DashboardLayout>
-              <TaskDetail />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <TaskDetail />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/tasks/:taskId/offers"
           element={
-            <DashboardLayout>
-              <AcceptOffer />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <AcceptOffer />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/wallet"
           element={
-            <DashboardLayout>
-              <Wallet />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Wallet />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/my-contracts"
           element={
-            <DashboardLayout>
-              <MyContracts />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <MyContracts />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/my-posted-contracts"
           element={
-            <DashboardLayout>
-              <MyPostedContracts />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <MyPostedContracts />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/my-work"
           element={
-            <DashboardLayout>
-              <MyWork />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <MyWork />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/contract/:contractId"
           element={
-            <DashboardLayout>
-              <ContractDetails />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <ContractDetails />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/my-requests"
           element={
-            <DashboardLayout>
-              <MyRequests />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <MyRequests />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/open-tasks"
           element={
-            <DashboardLayout>
-              <TasksPage />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <TasksPage />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
         <Route
           path="/profile"
           element={
-            <DashboardLayout>
-              <Profile />
-            </DashboardLayout>
+            <ProtectedRoute>
+              <DashboardLayout>
+                <Profile />
+              </DashboardLayout>
+            </ProtectedRoute>
           }
         />
-
-
       </Routes>
     </Router>
   );

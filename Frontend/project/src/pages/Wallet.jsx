@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { FaWallet, FaPlus, FaHistory, FaArrowUp, FaArrowDown } from 'react-icons/fa';
+
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
 const Wallet = () => {
@@ -109,21 +111,16 @@ const Wallet = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex justify-center items-center p-6">
-        <div className="relative">
-          <div className="w-16 h-16 border-4 border-purple-400/30 rounded-full animate-ping"></div>
-          <div className="absolute top-0 left-0 w-16 h-16 border-4 border-purple-400 border-t-transparent rounded-full animate-spin"></div>
-          <div className="absolute top-2 left-2 w-12 h-12 border-2 border-pink-400/50 rounded-full animate-pulse"></div>
-        </div>
-        <p className="ml-4 text-purple-300 text-lg">Loading wallet info...</p>
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="w-10 h-10 border-4 border-gray-200 border-t-black rounded-full animate-spin"></div>
       </div>
     );
   }
 
   if (message && !user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex justify-center items-center p-6">
-        <div className="bg-red-500/20 text-red-300 border border-red-500/30 rounded-xl p-6 text-center">
+      <div className="flex justify-center items-center min-h-screen p-4">
+        <div className="bg-red-50 text-red-600 border border-red-100 rounded-xl p-6 text-center max-w-md">
           {message}
         </div>
       </div>
@@ -132,113 +129,119 @@ const Wallet = () => {
 
   if (!user) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex justify-center items-center p-6">
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 text-center">
-          <p className="text-purple-300 text-lg">No wallet data found.</p>
+      <div className="flex justify-center items-center min-h-screen p-4">
+        <div className="bg-gray-50 text-gray-600 border border-gray-200 rounded-xl p-6 text-center">
+          <p>No wallet data found.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
-      <div className="max-w-4xl mx-auto space-y-8">
-        {/* Page Header */}
-        <div className="text-center space-y-4">
-          <h2 className="text-5xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-            💼 Wallet
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full"></div>
-        </div>
+    <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      {/* Page Header */}
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-2">My Wallet</h1>
+        <p className="text-gray-600">Manage your funds and transactions</p>
+      </div>
 
-        {/* Balance Card */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 text-center hover:bg-white/15 transition-all duration-500">
-          <h3 className="text-3xl font-semibold text-purple-300 mb-4">Current Balance</h3>
-          <div className="text-6xl font-bold bg-gradient-to-r from-green-400 to-emerald-400 bg-clip-text text-transparent">
-            ₹{user.walletBalance}
-          </div>
+      {/* Balance Card */}
+      <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-2xl border border-green-100 p-8 text-center">
+        <div className="flex items-center justify-center gap-2 mb-3">
+          <FaWallet className="text-green-600 text-xl" />
+          <h2 className="text-lg font-semibold text-gray-700">Current Balance</h2>
         </div>
-
-        {/* Top-up Section */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8">
-          <h3 className="text-3xl font-semibold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-6 text-center">
-            Add Money
-          </h3>
-          <div className="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
-            <input
-              type="number"
-              placeholder="Enter top-up amount"
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="flex-1 bg-black/30 border border-white/20 rounded-xl text-white placeholder-purple-300 px-4 py-3 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 focus:outline-none transition-all duration-300"
-            />
-            <button 
-              onClick={handleTopUp}
-              className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white font-medium py-3 px-8 rounded-xl hover:scale-[1.02] hover:shadow-xl transition-all duration-300"
-            >
-              Top Up
-            </button>
-          </div>
+        <div className="text-5xl font-bold text-gray-900">
+          ₹{user.walletBalance}
         </div>
+      </div>
 
-        {/* Message Display */}
-        {message && (
-          <div className={`text-center p-4 rounded-xl border ${
-            message.includes('✅') 
-              ? 'bg-green-500/20 text-green-300 border-green-500/30' 
-              : message.includes('⚠️')
-              ? 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30'
-              : 'bg-red-500/20 text-red-300 border-red-500/30'
+      {/* Top-up Section */}
+      <div className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+        <div className="flex items-center justify-center gap-2 mb-6">
+          <FaPlus className="text-gray-700" />
+          <h3 className="text-xl font-bold text-gray-900">Add Money</h3>
+        </div>
+        <div className="flex flex-col md:flex-row gap-4 max-w-md mx-auto">
+          <input
+            type="number"
+            placeholder="Enter amount"
+            value={amount}
+            onChange={(e) => setAmount(e.target.value)}
+            className="flex-1 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 px-4 py-3 focus:ring-2 focus:ring-green-500 focus:border-transparent outline-none transition-all"
+          />
+          <button
+            onClick={handleTopUp}
+            className="bg-green-600 hover:bg-green-700 text-white font-semibold py-3 px-8 rounded-xl transition-all"
+          >
+            Top Up
+          </button>
+        </div>
+      </div>
+
+      {/* Message Display */}
+      {message && (
+        <div className={`text-center p-4 rounded-xl text-sm font-medium ${message.includes('✅')
+            ? 'bg-green-50 text-green-700 border border-green-100'
+            : message.includes('⚠️')
+              ? 'bg-yellow-50 text-yellow-700 border border-yellow-100'
+              : 'bg-red-50 text-red-700 border border-red-100'
           }`}>
-            {message}
-          </div>
-        )}
+          {message}
+        </div>
+      )}
 
-        {/* Transaction History */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8">
-          <h3 className="text-3xl font-semibold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-6 flex items-center justify-center gap-3">
-            📜 Transaction History
-          </h3>
-          
-          {transactions.length === 0 ? (
-            <div className="text-center py-12">
-              <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full mb-6"></div>
-              <p className="text-purple-300 text-lg">No transactions yet.</p>
-            </div>
-          ) : (
-            <div className="space-y-4">
-              {transactions.map((tx, index) => (
-                <div 
-                  key={index} 
-                  className="bg-black/20 rounded-xl p-6 hover:bg-black/30 transition-all duration-300"
-                >
-                  <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
-                    <div className="flex items-center gap-4">
-                      <span className={`px-3 py-1 rounded-lg text-xs font-bold border ${
-                        tx.type === 'credit' 
-                          ? 'bg-green-500/20 text-green-300 border-green-500/30'
-                          : tx.type === 'debit'
-                          ? 'bg-red-500/20 text-red-300 border-red-500/30'
-                          : 'bg-blue-500/20 text-blue-300 border-blue-500/30'
+      {/* Transaction History */}
+      <div className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm">
+        <div className="flex items-center justify-center gap-2 mb-6">
+          <FaHistory className="text-gray-700" />
+          <h3 className="text-xl font-bold text-gray-900">Transaction History</h3>
+        </div>
+
+        {transactions.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-gray-500">No transactions yet.</p>
+          </div>
+        ) : (
+          <div className="space-y-3">
+            {transactions.map((tx, index) => (
+              <div
+                key={index}
+                className="bg-gray-50 rounded-xl p-4 border border-gray-100 hover:border-gray-200 transition-all"
+              >
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
+                  <div className="flex items-center gap-3">
+                    <div className={`w-8 h-8 rounded-full flex items-center justify-center ${tx.type === 'credit'
+                        ? 'bg-green-100 text-green-600'
+                        : tx.type === 'debit'
+                          ? 'bg-red-100 text-red-600'
+                          : 'bg-blue-100 text-blue-600'
                       }`}>
+                      {tx.type === 'credit' ? <FaArrowDown /> : <FaArrowUp />}
+                    </div>
+                    <div>
+                      <span className={`px-2 py-0.5 rounded text-xs font-bold ${tx.type === 'credit'
+                          ? 'bg-green-100 text-green-700'
+                          : tx.type === 'debit'
+                            ? 'bg-red-100 text-red-700'
+                            : 'bg-blue-100 text-blue-700'
+                        }`}>
                         {tx.type.toUpperCase()}
                       </span>
-                      <span className="text-white font-semibold text-lg">
-                        ₹{tx.amount}
-                      </span>
-                      <span className="text-purple-200">
-                        — {tx.reason}
-                      </span>
-                    </div>
-                    <div className="text-purple-300 text-sm">
-                      {new Date(tx.date).toLocaleString()}
+                      <p className="text-gray-600 text-sm mt-1">{tx.reason}</p>
                     </div>
                   </div>
+                  <div className="md:text-right">
+                    <p className="text-gray-900 font-bold text-lg">₹{tx.amount}</p>
+                    <p className="text-gray-500 text-xs">
+                      {new Date(tx.date).toLocaleString()}
+                    </p>
+                  </div>
                 </div>
-              ))}
-            </div>
-          )}
-        </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

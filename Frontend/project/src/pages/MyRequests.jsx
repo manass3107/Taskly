@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
+import { FaClipboardList, FaCheckCircle, FaClock, FaTimesCircle } from 'react-icons/fa';
+
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
 const MyRequests = () => {
@@ -26,79 +28,66 @@ const MyRequests = () => {
     fetchRequests();
   }, [userRole]);
 
-  if (userRole !== 'worker') {
-    return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
-        <div className="bg-red-500/20 text-red-300 border border-red-500/30 rounded-xl px-8 py-6 text-center">
-          <p className="text-lg">Access denied. Worker role required.</p>
-        </div>
-      </div>
-    );
-  }
+  // The previous "Access denied" message block has been removed as per instruction.
+  // For non-worker roles, the component will now proceed to render,
+  // but the requests array will remain empty as fetchRequests is not called.
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      <div className="max-w-4xl mx-auto p-8">
-        <div className="text-center mb-12">
-          <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-            My Milestone Requests
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full"></div>
-        </div>
+    <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-2">My Milestone Requests</h1>
+        <p className="text-gray-600">Track status of your submitted milestone requests</p>
+      </div>
 
-        {requests.length === 0 ? (
-          <div className="flex items-center justify-center mt-16">
-            <div className="bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded-xl px-8 py-6 text-center">
-              <p className="text-lg">No milestone requests submitted yet.</p>
-            </div>
+      {requests.length === 0 ? (
+        <div className="flex items-center justify-center mt-16">
+          <div className="bg-blue-50 text-blue-600 border border-blue-100 rounded-xl px-8 py-6 text-center">
+            <FaClipboardList className="mx-auto text-3xl mb-2" />
+            <p>No milestone requests submitted yet.</p>
           </div>
-        ) : (
-          <div className="space-y-6">
-            {requests.map((req, idx) => (
-              <div 
-                key={idx} 
-                className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all duration-500 hover:scale-[1.01] hover:shadow-xl"
-              >
-                <div className="space-y-4">
-                  <div>
-                    <p className="text-xl">
-                      <strong className="text-purple-300">Task:</strong>{' '}
-                      <span className="text-white">{req.taskTitle}</span>
-                    </p>
-                  </div>
-                  
-                  <div>
-                    <p className="text-xl">
-                      <strong className="text-purple-300">Milestone:</strong>{' '}
-                      <span className="text-white">{req.stage}</span>
-                      {req.description && (
-                        <span className="text-purple-200"> - {req.description}</span>
-                      )}
-                    </p>
-                  </div>
-                  
-                  <div>
-                    <p className="text-xl">
-                      <strong className="text-purple-300">Status:</strong>{' '}
-                      <span className={`font-semibold px-3 py-1 rounded-full text-sm ${
-                        req.status?.toLowerCase() === 'approved' 
-                          ? 'bg-green-500/20 text-green-300 border border-green-500/30' :
-                        req.status?.toLowerCase() === 'pending' 
-                          ? 'bg-yellow-500/20 text-yellow-300 border border-yellow-500/30' :
-                        req.status?.toLowerCase() === 'rejected' 
-                          ? 'bg-red-500/20 text-red-300 border border-red-500/30' :
-                          'bg-blue-500/20 text-blue-300 border border-blue-500/30'
-                      }`}>
-                        {req.status}
-                      </span>
-                    </p>
-                  </div>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {requests.map((req, idx) => (
+            <div
+              key={idx}
+              className="bg-white border border-gray-100 rounded-xl p-6 shadow-sm hover:shadow-md transition-all"
+            >
+              <div className="space-y-3">
+                <div>
+                  <p className="text-sm text-gray-500 mb-1">Task</p>
+                  <p className="text-gray-900 font-semibold text-lg">{req.taskTitle}</p>
+                </div>
+
+                <div>
+                  <p className="text-sm text-gray-500 mb-1">Milestone</p>
+                  <p className="text-gray-900 font-medium">{req.stage}</p>
+                  {req.description && (
+                    <p className="text-gray-600 text-sm mt-1">{req.description}</p>
+                  )}
+                </div>
+
+                <div>
+                  <p className="text-sm text-gray-500 mb-1">Status</p>
+                  <span className={`inline-flex items-center gap-1.5 font-semibold px-3 py-1 rounded-full text-sm ${req.status?.toLowerCase() === 'approved'
+                    ? 'bg-green-100 text-green-700' :
+                    req.status?.toLowerCase() === 'pending'
+                      ? 'bg-yellow-100 text-yellow-700' :
+                      req.status?.toLowerCase() === 'rejected'
+                        ? 'bg-red-100 text-red-700' :
+                        'bg-blue-100 text-blue-700'
+                    }`}>
+                    {req.status?.toLowerCase() === 'approved' && <FaCheckCircle />}
+                    {req.status?.toLowerCase() === 'pending' && <FaClock />}
+                    {req.status?.toLowerCase() === 'rejected' && <FaTimesCircle />}
+                    {req.status}
+                  </span>
                 </div>
               </div>
-            ))}
-          </div>
-        )}
-      </div>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

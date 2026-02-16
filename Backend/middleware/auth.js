@@ -11,16 +11,14 @@ const authMiddleware = (req, res, next) => {
 
   try {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
-  
+
     if (!decoded._id) {
       console.error('❌ AUTH: Token missing _id:', decoded);
       return res.status(400).json({ error: 'Invalid token payload (no _id)' });
     }
 
-    // ✅ Include role in req.user
     req.user = {
-      _id: decoded._id,
-      role: decoded.role || null
+      _id: decoded._id
     };
     next();
   } catch (err) {

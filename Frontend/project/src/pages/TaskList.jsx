@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { motion, AnimatePresence } from 'framer-motion';
+import { FaCalendarAlt, FaMoneyBillWave, FaClock } from 'react-icons/fa';
+
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
-console.log("TaskList component rendered");
 
 const TaskList = ({ showMyTasks = false }) => {
   const [tasks, setTasks] = useState([]);
@@ -10,129 +12,137 @@ const TaskList = ({ showMyTasks = false }) => {
   const navigate = useNavigate();
 
   useEffect(() => {
-  const token = localStorage.getItem('token');
-  console.log("Token:", token);
-  console.log("showMyTasks value:", showMyTasks);
+    const token = localStorage.getItem('token');
 
-  if (!token && showMyTasks) {
-    console.warn("No token found and showMyTasks is true. Redirecting to login.");
-    window.location.href = '/login';
-    return;
-  }
+    if (!token && showMyTasks) {
+      window.location.href = '/login';
+      return;
+    }
 
-  const fetchTasks = async () => {
-    try {
-      const url = showMyTasks? `${API_BASE}/api/tasks/my-tasks`: `${API_BASE}/api/tasks/open`;
+    const fetchTasks = async () => {
+      try {
+        const url = showMyTasks ? `${API_BASE}/api/tasks/my-tasks` : `${API_BASE}/api/tasks/open`;
+        const headers = token ? { Authorization: `Bearer ${token}` } : {};
 
-      console.log("Fetching tasks from URL:", url);
+        const res = await fetch(url, { headers });
 
-      const headers = token ? { Authorization: `Bearer ${token}` } : {};
-      console.log("Request headers:", headers);
+        if (res.status === 401) {
+          setMessage('Session expired. Please login again.');
+          localStorage.clear();
+          setTimeout(() => window.location.href = '/login', 1000);
+          return;
+        }
 
-      const res = await fetch(url, { headers });
-      console.log("Response status:", res.status);
+        if (!res.ok) {
+          const data = await res.json();
+          throw new Error(data.error || 'Failed to fetch tasks');
+        }
 
-      if (res.status === 401) {
-        setMessage('⚠️ Session expired. Please login again.');
-        localStorage.clear();
-        setTimeout(() => window.location.href = '/login', 1000);
-        return;
-      }
-
-      if (!res.ok) {
         const data = await res.json();
-        throw new Error(data.error || 'Failed to fetch tasks');
+        setTasks(data);
+      } catch (err) {
+        console.error('Error fetching tasks:', err);
+        setMessage(err.message);
+      } finally {
+        setLoading(false);
       }
+    };
 
-      const data = await res.json();
-      console.log("Fetched tasks:", data);
-      setTasks(data);
-    } catch (err) {
-      console.error('Error fetching tasks:', err);
-      setMessage(`❌ ${err.message}`);
-    } finally {
-      setLoading(false);
+    fetchTasks();
+  }, [showMyTasks]);
+
+  // Animation variants
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
     }
   };
 
-  fetchTasks();
-}, [showMyTasks]);
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0 }
+  };
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center p-12">
-        <div className="relative">
-          <div className="w-16 h-16 border-4 border-purple-400/30 rounded-full animate-ping"></div>
-          <div className="absolute top-0 left-0 w-16 h-16 border-4 border-purple-400 border-t-transparent rounded-full animate-spin"></div>
-          <div className="absolute top-2 left-2 w-12 h-12 border-2 border-pink-400/50 rounded-full animate-pulse"></div>
-        </div>
-        <p className="ml-4 text-purple-300 text-lg">Loading tasks...</p>
+      <div className="flex justify-center items-center py-20">
+        <div className="w-10 h-10 border-4 border-gray-200 border-t-black rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
-    <div className="max-w-6xl mx-auto p-6 space-y-8">
+    <div className="max-w-6xl mx-auto space-y-8">
       {tasks.length === 0 ? (
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-12 text-center">
-          <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full mb-6"></div>
-          <p className="text-purple-300 text-xl">{message || 'No tasks available at the moment.'}</p>
+        <div className="bg-white rounded-2xl border border-gray-200 p-12 text-center shadow-sm">
+          <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">
+            📭
+          </div>
+          <p className="text-gray-500 text-lg">{message || 'No tasks available at the moment.'}</p>
         </div>
       ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <motion.div
+          variants={container}
+          initial="hidden"
+          animate="show"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+        >
           {tasks.map(task => (
-            <div 
-              key={task._id} 
-              className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-6 hover:bg-white/15 transition-all duration-500 hover:scale-[1.02] hover:shadow-xl group"
+            <motion.div
+              key={task._id}
+              variants={item}
+              whileHover={{ y: -5, transition: { duration: 0.2 } }}
+              className="group bg-white rounded-2xl border border-gray-100 p-6 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between h-full"
             >
               <div className="space-y-4">
-                <h3 className="text-xl font-semibold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
+                <div className="flex justify-between items-start">
+                  <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${task.status === 'completed'
+                      ? 'bg-green-50 text-green-700 border-green-100'
+                      : task.status === 'in_progress'
+                        ? 'bg-yellow-50 text-yellow-700 border-yellow-100'
+                        : 'bg-blue-50 text-blue-700 border-blue-100'
+                    }`}>
+                    {task.status.replace('_', ' ').toUpperCase()}
+                  </span>
+                  <span className="text-xs text-gray-400 font-medium">
+                    {new Date(task.createdAt).toLocaleDateString()}
+                  </span>
+                </div>
+
+                <h3 className="text-lg font-bold text-gray-900 line-clamp-2 leading-tight group-hover:text-blue-600 transition-colors">
                   {task.title}
                 </h3>
-                
-                <p className="text-purple-200 line-clamp-3">
+
+                <p className="text-gray-500 text-sm line-clamp-3 leading-relaxed">
                   {task.description}
                 </p>
-                
-                <div className="bg-black/20 rounded-xl p-4 space-y-2">
-                  <div className="flex justify-between items-center">
-                    <span className="text-purple-300 text-sm font-medium">Budget:</span>
-                    <span className="text-white font-semibold">₹{task.budget}</span>
+
+                <div className="pt-4 border-t border-gray-100 space-y-3">
+                  <div className="flex items-center text-gray-600 text-sm font-medium">
+                    <FaMoneyBillWave className="mr-2 text-green-600" />
+                    <span>₹{task.budget}</span>
                   </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-purple-300 text-sm font-medium">Status:</span>
-                    <span className={`px-3 py-1 rounded-lg text-xs font-medium border ${
-                      task.status === 'completed' 
-                        ? 'bg-green-500/20 text-green-300 border-green-500/30'
-                        : task.status === 'in_progress'
-                        ? 'bg-yellow-500/20 text-yellow-300 border-yellow-500/30'
-                        : task.status === 'open'
-                        ? 'bg-blue-500/20 text-blue-300 border-blue-500/30'
-                        : 'bg-purple-500/20 text-purple-300 border-purple-500/30'
-                    }`}>
-                      {task.status.replace('_', ' ').toUpperCase()}
-                    </span>
-                  </div>
-                  
-                  <div className="flex justify-between items-center">
-                    <span className="text-purple-300 text-sm font-medium">Deadline:</span>
-                    <span className="text-white text-sm">
-                      {new Date(task.deadline).toLocaleDateString()}
-                    </span>
+
+                  <div className="flex items-center text-gray-500 text-sm">
+                    <FaCalendarAlt className="mr-2 text-gray-400" />
+                    <span>Due: {new Date(task.deadline).toLocaleDateString()}</span>
                   </div>
                 </div>
-                
-                <button
-                  className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-medium py-3 px-4 rounded-xl hover:scale-[1.02] hover:shadow-xl transition-all duration-300"
-                  onClick={() => navigate(`/tasks/${task._id}`)}
-                >
-                  View Details
-                </button>
               </div>
-            </div>
+
+              <button
+                className="mt-6 w-full py-2.5 px-4 bg-gray-50 hover:bg-black hover:text-white text-gray-900 font-semibold rounded-lg transition-all duration-300 text-sm"
+                onClick={() => navigate(`/tasks/${task._id}`)}
+              >
+                View Details
+              </button>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       )}
     </div>
   );

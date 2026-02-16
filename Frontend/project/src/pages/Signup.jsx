@@ -1,16 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { FaUser, FaEnvelope, FaLock, FaBriefcase } from 'react-icons/fa';
+
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
 function Signup() {
   const navigate = (path) => {
-    console.log(`Navigating to: ${path}`);
     window.location.href = path;
   };
+
   const [form, setForm] = useState({
     name: '',
     email: '',
-    password: '',
-    role: ''
+    password: ''
   });
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -53,184 +56,130 @@ function Signup() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center px-4">
-      <div className="w-full max-w-md">
-        {/* Header */}
-        <div className="text-center mb-8">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
-            Sign Up
-          </h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full mb-4"></div>
-          <p className="text-purple-200">Join Taskly and start your journey</p>
-        </div>
+    <div className="flex min-h-screen bg-white">
+      {/* Left Side - Form */}
+      <div className="w-full lg:w-1/2 flex items-center justify-center p-8 lg:p-12">
+        <div className="max-w-md w-full space-y-8">
+          <div className="text-center">
+            <Link to="/" className="inline-flex items-center gap-2 mb-8">
+              <div className="w-8 h-8 bg-black rounded text-white flex items-center justify-center font-bold text-lg">T</div>
+              <span className="text-xl font-bold text-gray-900 tracking-tight">Taskly</span>
+            </Link>
+            <h2 className="text-3xl font-bold text-gray-900">Create your account</h2>
+            <p className="mt-2 text-gray-600">Join Taskly and start your journey.</p>
+          </div>
 
-        {/* Signup Form Card */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 hover:bg-white/15 transition-all duration-500 animate-slide-up">
-          {/* Error Message */}
           {error && (
-            <div className="mb-6 bg-red-500/20 text-red-300 border border-red-500/30 rounded-xl p-4 text-center">
-              <div className="flex items-center justify-center mb-2">
-                <svg className="w-5 h-5 text-red-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
-                <span className="font-medium">Error</span>
-              </div>
-              <p className="text-sm">{error}</p>
+            <div className="bg-red-50 text-red-600 p-4 rounded-lg text-sm border border-red-100 text-center">
+              {error}
             </div>
           )}
 
-          <div className="space-y-6">
-            {/* Name Input */}
+          <form className="mt-8 space-y-5" onSubmit={handleSubmit}>
+            {/* Name */}
             <div>
-              <label className="block text-white font-medium mb-2">
-                <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                Full Name
-              </label>
-              <input
-                type="text"
-                name="name"
-                placeholder="Enter your full name"
-                value={form.name}
-                onChange={handleChange}
-                required
-                className="w-full bg-black/30 border border-white/20 rounded-xl text-white placeholder-purple-300 px-4 py-3 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 focus:outline-none transition-all duration-300"
-              />
-            </div>
-
-            {/* Email Input */}
-            <div>
-              <label className="block text-white font-medium mb-2">
-                <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                </svg>
-                Email Address
-              </label>
-              <input
-                type="email"
-                name="email"
-                placeholder="Enter your email address"
-                value={form.email}
-                onChange={handleChange}
-                required
-                className="w-full bg-black/30 border border-white/20 rounded-xl text-white placeholder-purple-300 px-4 py-3 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 focus:outline-none transition-all duration-300"
-              />
-            </div>
-
-            {/* Password Input */}
-            <div>
-              <label className="block text-white font-medium mb-2">
-                <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
-                </svg>
-                Password
-              </label>
-              <input
-                type="password"
-                name="password"
-                placeholder="Create a secure password"
-                value={form.password}
-                onChange={handleChange}
-                required
-                className="w-full bg-black/30 border border-white/20 rounded-xl text-white placeholder-purple-300 px-4 py-3 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 focus:outline-none transition-all duration-300"
-              />
-            </div>
-
-            {/* Role Selection */}
-            <div>
-              <label className="block text-white font-medium mb-2">
-                <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2-2v2m8 0H8m8 0v2a2 2 0 01-2 2H10a2 2 0 01-2-2V6" />
-                </svg>
-                Select Your Role
-              </label>
-              <select
-                name="role"
-                value={form.role}
-                onChange={handleChange}
-                required
-                className="w-full bg-black/30 border border-white/20 rounded-xl text-white px-4 py-3 focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 focus:outline-none transition-all duration-300 [&>option]:bg-slate-800 [&>option]:text-white"
-              >
-                <option value="" disabled className="text-purple-300">Choose your role...</option>
-                <option value="worker">🔧 Worker - Complete tasks and earn</option>
-                <option value="poster">📋 Poster - Post tasks and hire workers</option>
-              </select>
-            </div>
-
-            {/* Role Description Cards */}
-            {form.role && (
-              <div className="bg-black/20 rounded-xl p-4 border border-white/10">
-                {form.role === 'worker' && (
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-cyan-500 rounded-full mx-auto mb-3 flex items-center justify-center">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-cyan-300 font-medium mb-1">Worker Account</h3>
-                    <p className="text-purple-200 text-sm">Browse available tasks, submit offers, and earn money by completing work.</p>
-                  </div>
-                )}
-                {form.role === 'poster' && (
-                  <div className="text-center">
-                    <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto mb-3 flex items-center justify-center">
-                      <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                      </svg>
-                    </div>
-                    <h3 className="text-pink-300 font-medium mb-1">Poster Account</h3>
-                    <p className="text-purple-200 text-sm">Create tasks, review offers from workers, and manage your projects efficiently.</p>
-                  </div>
-                )}
+              <label className="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FaUser className="text-gray-400" />
+                </div>
+                <input
+                  type="text"
+                  name="name"
+                  value={form.name}
+                  onChange={handleChange}
+                  className="pl-10 w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent transition-all outline-none"
+                  placeholder="John Doe"
+                  required
+                />
               </div>
-            )}
-
-            {/* Submit Button */}
-            <button
-              onClick={handleSubmit}
-              disabled={isLoading}
-              className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 disabled:from-purple-600 disabled:to-pink-600 disabled:opacity-50 text-white font-medium py-3 px-6 rounded-xl hover:scale-[1.02] hover:shadow-xl transition-all duration-300 flex items-center justify-center"
-            >
-              {isLoading ? (
-                <>
-                  <div className="w-4 h-4 border-2 border-white/30 border-t-white rounded-full animate-spin mr-2"></div>
-                  Creating Account...
-                </>
-              ) : (
-                <>
-                  <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
-                  </svg>
-                  Create Account
-                </>
-              )}
-            </button>
-
-            {/* Login Link */}
-            <div className="text-center pt-6 border-t border-white/10">
-              <p className="text-purple-200">
-                Already have an account?{' '}
-                <a 
-                  href="/login" 
-                  className="text-purple-400 hover:text-pink-400 font-medium transition-colors duration-300 hover:underline"
-                >
-                  Login here
-                </a>
-              </p>
             </div>
-          </div>
-        </div>
 
-        {/* Footer */}
-        <div className="text-center mt-8">
-          <p className="text-purple-300 text-sm">
-            By signing up, you agree to our{' '}
-            <a href="/terms" className="text-purple-400 hover:text-pink-400 transition-colors duration-300">Terms of Service</a>
-            {' '}and{' '}
-            <a href="/privacy" className="text-purple-400 hover:text-pink-400 transition-colors duration-300">Privacy Policy</a>
+            {/* Email */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FaEnvelope className="text-gray-400" />
+                </div>
+                <input
+                  type="email"
+                  name="email"
+                  value={form.email}
+                  onChange={handleChange}
+                  className="pl-10 w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent transition-all outline-none"
+                  placeholder="you@example.com"
+                  required
+                />
+              </div>
+            </div>
+
+            {/* Password */}
+            <div>
+              <label className="block text-sm font-medium text-gray-700 mb-1">Password</label>
+              <div className="relative">
+                <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                  <FaLock className="text-gray-400" />
+                </div>
+                <input
+                  type="password"
+                  name="password"
+                  value={form.password}
+                  onChange={handleChange}
+                  className="pl-10 w-full p-3 bg-gray-50 border border-gray-200 rounded-lg focus:ring-2 focus:ring-black focus:border-transparent transition-all outline-none"
+                  placeholder="••••••••"
+                  required
+                />
+              </div>
+            </div>
+
+
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full flex justify-center py-3 px-4 border border-transparent rounded-xl shadow-sm text-sm font-medium text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-black transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              {isLoading ? 'Creating account...' : 'Create Account'}
+            </button>
+          </form>
+
+          <p className="mt-8 text-center text-sm text-gray-600">
+            Already have an account?{' '}
+            <Link to="/login" className="font-medium text-black hover:underline">
+              Sign in
+            </Link>
           </p>
+        </div>
+      </div>
+
+      {/* Right Side - Visual */}
+      <div className="hidden lg:flex lg:w-1/2 bg-gray-50 items-center justify-center relative overflow-hidden">
+        <div className="relative z-10 max-w-lg text-center p-12">
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+          >
+            <div className="grid grid-cols-2 gap-4 mb-8">
+              <div className="bg-white p-4 rounded-xl shadow-lg transform translate-y-4">
+                <div className="w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center text-blue-600 mb-2">
+                  🔧
+                </div>
+                <p className="text-sm font-bold text-gray-900">Worker</p>
+                <p className="text-xs text-gray-500">Find & complete tasks</p>
+              </div>
+              <div className="bg-white p-4 rounded-xl shadow-lg transform -translate-y-4">
+                <div className="w-8 h-8 bg-green-100 rounded-full flex items-center justify-center text-green-600 mb-2">
+                  📋
+                </div>
+                <p className="text-sm font-bold text-gray-900">Poster</p>
+                <p className="text-xs text-gray-500">Post & manage tasks</p>
+              </div>
+            </div>
+            <h3 className="text-3xl font-bold text-gray-900 mb-4">Start getting things done.</h3>
+            <p className="text-gray-600 text-lg">Whether you're hiring or working, Taskly makes it simple.</p>
+          </motion.div>
         </div>
       </div>
     </div>

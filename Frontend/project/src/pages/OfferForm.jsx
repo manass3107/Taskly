@@ -1,24 +1,23 @@
 import React, { useState } from 'react';
+import { FaMoneyBillWave, FaEdit } from 'react-icons/fa';
+
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
 const OfferForm = ({ taskId }) => {
   const [proposedFee, setProposedFee] = useState('');
   const [message, setMessage] = useState('');
   const [statusMsg, setStatusMsg] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setStatusMsg('');
+    setIsSubmitting(true);
 
     const token = localStorage.getItem('token');
     if (!token) {
       setStatusMsg('⚠️ Please login to apply an offer');
-      return;
-    }
-
-    const role = localStorage.getItem('userRole');
-    if (role !== 'worker') {
-      setStatusMsg('⚠️ Only workers can apply to tasks.');
+      setIsSubmitting(false);
       return;
     }
 
@@ -43,55 +42,59 @@ const OfferForm = ({ taskId }) => {
       setMessage('');
     } catch (err) {
       setStatusMsg(`❌ ${err.message}`);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   return (
-    <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8">
-      <h3 className="text-3xl font-bold text-white mb-6">Submit Your Offer</h3>
-      <div className="w-16 h-1 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mb-8"></div>
-      
-      <form onSubmit={handleSubmit} className="space-y-6">
+    <div className="space-y-6">
+      <form onSubmit={handleSubmit} className="space-y-5">
         <div>
-          <label className="block text-purple-300 text-lg font-semibold mb-2">
-            Proposed Fee (₹)
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Your Proposed Fee
           </label>
-          <input
-            type="number"
-            value={proposedFee}
-            onChange={(e) => setProposedFee(e.target.value)}
-            placeholder="Enter your proposed fee"
-            className="w-full bg-black/30 border border-white/20 rounded-xl text-white placeholder-purple-300 px-4 py-4 text-lg focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 focus:outline-none transition-all duration-300"
-            required
-          />
+          <div className="relative">
+            <div className="absolute top-3.5 left-4 text-gray-400">
+              <FaMoneyBillWave />
+            </div>
+            <input
+              type="number"
+              value={proposedFee}
+              onChange={(e) => setProposedFee(e.target.value)}
+              placeholder="Enter amount in ₹"
+              className="w-full pl-10 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-black focus:border-transparent transition-all outline-none"
+              required
+            />
+          </div>
         </div>
 
         <div>
-          <label className="block text-purple-300 text-lg font-semibold mb-2">
-            Message (Optional)
+          <label className="block text-sm font-semibold text-gray-700 mb-2">
+            Cover Message <span className="text-gray-400 font-normal">(Optional)</span>
           </label>
           <textarea
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Tell the client why you're the right fit for this task..."
-            rows={5}
-            className="w-full bg-black/30 border border-white/20 rounded-xl text-white placeholder-purple-300 px-4 py-4 text-lg focus:border-purple-400 focus:ring-2 focus:ring-purple-400/30 focus:outline-none transition-all duration-300 resize-none"
+            placeholder="Briefly explain why you're the right fit for this project..."
+            rows={4}
+            className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-900 placeholder-gray-400 focus:ring-2 focus:ring-black focus:border-transparent transition-all outline-none resize-none"
           />
         </div>
 
-        <button 
-          type="submit" 
-          className="w-full bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white px-8 py-4 rounded-xl font-semibold text-lg hover:scale-[1.02] hover:shadow-xl transition-all duration-300"
+        <button
+          type="submit"
+          disabled={isSubmitting}
+          className="w-full bg-black text-white font-semibold py-3 px-6 rounded-xl hover:bg-gray-800 transition-all disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          Apply Offer
+          {isSubmitting ? 'Submitting...' : 'Submit Proposal'}
         </button>
 
         {statusMsg && (
-          <div className={`p-4 rounded-xl border font-semibold text-center transition-all duration-300 ${
-            statusMsg.startsWith('✅') 
-              ? 'bg-green-500/20 text-green-300 border-green-500/30' 
-              : 'bg-red-500/20 text-red-300 border-red-500/30'
-          }`}>
+          <div className={`p-3 rounded-lg text-sm font-medium text-center ${statusMsg.startsWith('✅')
+            ? 'bg-green-50 text-green-700 border border-green-100'
+            : 'bg-red-50 text-red-700 border border-red-100'
+            }`}>
             {statusMsg}
           </div>
         )}

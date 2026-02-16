@@ -1,6 +1,7 @@
 const mongoose = require('mongoose');
 
 const milestoneSchema = new mongoose.Schema({
+
   stage: { type: String, required: true },
   description: { type: String, required: true },
   completed: { type: Boolean, default: false },
@@ -32,8 +33,8 @@ const contractSchema = new mongoose.Schema({
     type: String
   },
   disputeBy: {
-    type: String,
-    enum: ['poster', 'worker'], 
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
     default: null
   },
   status: {

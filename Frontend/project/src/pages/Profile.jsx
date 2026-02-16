@@ -1,4 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { FaUser, FaWallet, FaEdit, FaPlus, FaSignOutAlt } from 'react-icons/fa';
 
 function Profile() {
   const [profile, setProfile] = useState(null);
@@ -23,151 +25,118 @@ function Profile() {
       });
   }, []);
 
-  // Error State
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <div className="max-w-4xl mx-auto px-4 py-8">
-          <div className="flex items-center justify-center min-h-[60vh]">
-            <div className="bg-red-500/20 text-red-300 border border-red-500/30 rounded-xl p-6 text-center max-w-md">
-              <div className="w-12 h-12 bg-red-500/30 rounded-full mx-auto mb-4 flex items-center justify-center">
-                <svg
-                  className="w-6 h-6 text-red-400"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-                  />
-                </svg>
-              </div>
-              <p className="font-medium">{error}</p>
-            </div>
-          </div>
+      <div className="flex justify-center items-center min-h-screen p-4">
+        <div className="bg-red-50 text-red-600 px-6 py-4 rounded-xl border border-red-100 text-center max-w-md">
+          <p className="font-medium">{error}</p>
         </div>
       </div>
     );
   }
 
-  // Loading State
   if (!profile) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <div className="max-w-4xl mx-auto px-4 py-8">
-          <div className="flex items-center justify-center min-h-[60vh]">
-            <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-12 text-center">
-              <div className="relative w-16 h-16 mx-auto mb-6">
-                <div className="absolute inset-0 rounded-full border-4 border-purple-500/30"></div>
-                <div className="absolute inset-0 rounded-full border-4 border-transparent border-t-purple-500 animate-spin"></div>
-                <div
-                  className="absolute inset-2 rounded-full border-2 border-transparent border-t-pink-400 animate-spin"
-                  style={{
-                    animationDirection: 'reverse',
-                    animationDuration: '0.8s',
-                  }}
-                ></div>
-              </div>
-              <p className="text-purple-200 font-medium">Loading your profile...</p>
-            </div>
-          </div>
-        </div>
+      <div className="flex justify-center items-center min-h-screen">
+        <div className="w-10 h-10 border-4 border-gray-200 border-t-black rounded-full animate-spin"></div>
       </div>
     );
   }
 
-  // ✅ Main Profile UI
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      <div className="max-w-4xl mx-auto px-4 py-8">
-        {/* Header */}
-        <div className="text-center mb-12">
-          <h1 className="text-5xl font-bold bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent mb-4">
-            My Profile
-          </h1>
-          <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full"></div>
+    <div className="max-w-4xl mx-auto px-4 py-8 space-y-8">
+      {/* Header */}
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-2">My Profile</h1>
+        <p className="text-gray-600">Manage your account settings and wallet</p>
+      </div>
+
+      {/* Profile Card */}
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden">
+        {/* Avatar Section */}
+        <div className="bg-gray-50 p-8 text-center border-b border-gray-100">
+          <div className="relative inline-block">
+            <div className="w-24 h-24 bg-black rounded-full mx-auto mb-4 flex items-center justify-center text-white text-3xl font-bold">
+              {profile.name ? profile.name.charAt(0).toUpperCase() : 'U'}
+            </div>
+            <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-green-500 rounded-full border-4 border-white flex items-center justify-center">
+              <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
+                <path
+                  fillRule="evenodd"
+                  d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
+                  clipRule="evenodd"
+                />
+              </svg>
+            </div>
+          </div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-1">{profile.name}</h2>
+          <span className="inline-block bg-gray-100 text-gray-700 px-4 py-1.5 rounded-full text-sm font-semibold uppercase tracking-wide">
+            {profile.role || 'User'}
+          </span>
         </div>
 
-        {/* Profile Card */}
-        <div className="bg-white/10 backdrop-blur-lg rounded-2xl border border-white/20 p-8 hover:bg-white/15 transition-all duration-500 animate-slide-up">
-          {/* Avatar Section */}
-          <div className="text-center mb-8">
-            <div className="relative inline-block">
-              <div className="w-24 h-24 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full mx-auto mb-4 flex items-center justify-center text-white text-2xl font-bold">
-                {profile.name ? profile.name.charAt(0).toUpperCase() : 'U'}
-              </div>
-              <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-green-500 rounded-full border-4 border-slate-900 flex items-center justify-center">
-                <svg className="w-3 h-3 text-white" fill="currentColor" viewBox="0 0 20 20">
-                  <path
-                    fillRule="evenodd"
-                    d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </div>
-            </div>
-            <h2 className="text-2xl font-semibold text-white mb-2">{profile.name}</h2>
-            <span className="inline-block bg-purple-500/20 text-purple-300 px-3 py-1 rounded-full text-sm font-medium border border-purple-500/30">
-              {profile.role || 'User'}
-            </span>
-          </div>
-
-          {/* Profile Info */}
+        {/* Profile Info */}
+        <div className="p-8">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {/* Personal Info */}
-            <div className="bg-black/20 rounded-xl p-6">
-              <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
-                <svg className="w-5 h-5 text-purple-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
-                </svg>
-                Personal Details
-              </h3>
-              <div className="space-y-4">
-                <div className="flex justify-between items-center py-2 border-b border-white/10">
-                  <span className="text-purple-300 font-medium">Name:</span>
-                  <span className="text-white">{profile.name}</span>
+            <div className="bg-gray-50 rounded-xl p-6 border border-gray-100">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 bg-gray-200 rounded-lg flex items-center justify-center text-gray-600">
+                  <FaUser />
+                </div>
+                <h3 className="text-lg font-bold text-gray-900">Personal Details</h3>
+              </div>
+              <div className="space-y-3">
+                <div className="flex justify-between items-center py-2 border-b border-gray-200">
+                  <span className="text-gray-600 font-medium text-sm">Name</span>
+                  <span className="text-gray-900 font-semibold">{profile.name}</span>
                 </div>
                 <div className="flex justify-between items-center py-2">
-                  <span className="text-purple-300 font-medium">Email:</span>
-                  <span className="text-white text-sm break-all">{profile.email}</span>
+                  <span className="text-gray-600 font-medium text-sm">Email</span>
+                  <span className="text-gray-900 font-semibold text-sm break-all">{profile.email}</span>
                 </div>
               </div>
             </div>
 
             {/* Wallet Info */}
-            <div className="bg-black/20 rounded-xl p-6">
-              <h3 className="text-xl font-semibold text-white mb-4 flex items-center">
-                <svg className="w-5 h-5 text-green-400 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
-                </svg>
-                Wallet
-              </h3>
-              <div className="text-center">
-                <div className="bg-gradient-to-r from-green-500/20 to-emerald-500/20 border border-green-500/30 rounded-xl p-6">
-                  <p className="text-green-300 text-sm font-medium mb-2">Current Balance</p>
-                  <p className="text-3xl font-bold text-white">₹{profile.walletBalance}</p>
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 rounded-xl p-6 border border-green-100">
+              <div className="flex items-center gap-2 mb-4">
+                <div className="w-8 h-8 bg-green-500 rounded-lg flex items-center justify-center text-white">
+                  <FaWallet />
                 </div>
+                <h3 className="text-lg font-bold text-gray-900">Wallet Balance</h3>
+              </div>
+              <div className="text-center py-4">
+                <p className="text-gray-600 text-sm font-medium mb-1">Available Balance</p>
+                <p className="text-4xl font-bold text-gray-900">₹{profile.walletBalance}</p>
               </div>
             </div>
           </div>
 
           {/* Actions */}
-          <div className="mt-8 pt-6 border-t border-white/10">
+          <div className="mt-8 pt-6 border-t border-gray-100">
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <button className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white font-medium py-3 px-8 rounded-xl hover:scale-[1.02] hover:shadow-xl transition-all duration-300 flex items-center justify-center">
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
-                </svg>
+              <button className="flex items-center justify-center gap-2 bg-black text-white font-semibold py-3 px-6 rounded-xl hover:bg-gray-800 transition-all">
+                <FaEdit />
                 Edit Profile
               </button>
-              <button className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white font-medium py-3 px-8 rounded-xl hover:scale-[1.02] hover:shadow-xl transition-all duration-300 flex items-center justify-center">
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                </svg>
+              <button className="flex items-center justify-center gap-2 bg-green-600 text-white font-semibold py-3 px-6 rounded-xl hover:bg-green-700 transition-all">
+                <FaPlus />
                 Add Funds
+              </button>
+            </div>
+
+            {/* Logout Button */}
+            <div className="mt-6 flex justify-center">
+              <button
+                onClick={() => {
+                  localStorage.clear();
+                  window.location.href = '/login';
+                }}
+                className="flex items-center justify-center gap-2 bg-red-600 text-white font-semibold py-3 px-8 rounded-xl hover:bg-red-700 transition-all shadow-md hover:shadow-lg"
+              >
+                <FaSignOutAlt />
+                Logout
               </button>
             </div>
           </div>

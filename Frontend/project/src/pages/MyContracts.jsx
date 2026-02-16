@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { FaFileContract, FaCheckCircle, FaClock, FaTimes } from 'react-icons/fa';
+
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
 function MyContracts() {
@@ -66,93 +68,94 @@ function MyContracts() {
   };
 
   if (error) return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
-      <div className="bg-red-500/20 text-red-300 border border-red-500/30 rounded-xl px-6 py-4 text-center">
+    <div className="flex items-center justify-center min-h-screen p-4">
+      <div className="bg-red-50 text-red-600 border border-red-100 rounded-xl px-6 py-4 text-center">
         Error: {error}
       </div>
     </div>
   );
-  
+
   if (contracts.length === 0) return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
-      <div className="bg-blue-500/20 text-blue-300 border border-blue-500/30 rounded-xl px-6 py-4 text-center">
-        No active contracts found.
+    <div className="flex items-center justify-center min-h-screen p-4">
+      <div className="bg-blue-50 text-blue-600 border border-blue-100 rounded-xl px-8 py-6 text-center">
+        <FaFileContract className="mx-auto text-3xl mb-2" />
+        <p>No active contracts found.</p>
       </div>
     </div>
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      <div className="max-w-6xl mx-auto p-8">
-        <div className="text-center mb-12">
-          <h2 className="text-5xl font-bold mb-4 bg-gradient-to-r from-purple-400 to-pink-400 bg-clip-text text-transparent">
-            My Contracts
-          </h2>
-          <div className="w-24 h-1 bg-gradient-to-r from-purple-400 to-pink-400 mx-auto rounded-full"></div>
-        </div>
+    <div className="max-w-6xl mx-auto px-4 py-8 space-y-8">
+      <div className="text-center">
+        <h1 className="text-4xl font-bold text-gray-900 mb-2">My Contracts</h1>
+        <p className="text-gray-600">Manage your active project contracts</p>
+      </div>
 
-        <div className="space-y-8">
-          {contracts.map(contract => (
-            <div
-              key={contract._id}
-              className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-all duration-500 hover:scale-[1.01] hover:shadow-xl"
-            >
-              <div className="mb-6">
-                <p className="text-xl mb-2">
-                  <span className="font-semibold text-purple-300">Task:</span>{' '}
-                  <span className="text-white">{contract.taskTitle || 'Untitled Task'}</span>
-                </p>
-                <p className="text-lg">
-                  <span className="font-semibold text-purple-300">Status:</span>{' '}
-                  <span className="text-white">{contract.status || 'Unknown'}</span>
-                </p>
-              </div>
-
-              <div className="space-y-6">
-                <h3 className="text-3xl font-bold text-white mb-4">Milestones</h3>
-                {(contract.milestones || []).map((m, idx) => (
-                  <div key={idx} className="bg-black/20 rounded-xl p-6 border border-white/10">
-                    <div className="space-y-3">
-                      <p className="text-lg">
-                        <strong className="text-purple-300">Stage:</strong>{' '}
-                        <span className="text-white">{m.stage || `Stage ${idx + 1}`}</span>
-                      </p>
-                      <p className="text-lg">
-                        <strong className="text-purple-300">Description:</strong>{' '}
-                        <span className="text-purple-200">{m.description || 'No description'}</span>
-                      </p>
-                      <p className="text-lg">
-                        <strong className="text-purple-300">Status:</strong>{' '}
-                        <span className={`font-semibold ${
-                          m.completed 
-                            ? 'text-green-300' 
-                            : m.completionRequested 
-                            ? 'text-yellow-300' 
-                            : 'text-purple-200'
-                        }`}>
-                          {m.completed
-                            ? '✅ Completed'
-                            : m.completionRequested
-                            ? '🕒 Pending Approval'
-                            : '⏳ Not requested'}
-                        </span>
-                      </p>
-
-                      {!m.completed && !m.completionRequested && (
-                        <button
-                          onClick={() => requestMilestoneCompletion(contract._id, idx)}
-                          className="mt-4 bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-400 hover:to-pink-400 text-white px-6 py-3 rounded-xl font-semibold hover:scale-[1.02] hover:shadow-xl transition-all duration-300"
-                        >
-                          Request Completion
-                        </button>
-                      )}
-                    </div>
-                  </div>
-                ))}
+      <div className="space-y-6">
+        {contracts.map(contract => (
+          <div
+            key={contract._id}
+            className="bg-white rounded-2xl border border-gray-100 p-8 shadow-sm"
+          >
+            <div className="mb-6 pb-6 border-b border-gray-100">
+              <div className="flex justify-between items-start">
+                <div>
+                  <p className="text-sm text-gray-500 mb-1">Task</p>
+                  <p className="text-2xl font-bold text-gray-900">{contract.taskTitle || 'Untitled Task'}</p>
+                </div>
+                <span className={`px-3 py-1 rounded-full text-sm font-semibold ${contract.status?.toLowerCase() === 'active' ? 'bg-green-100 text-green-700' :
+                    contract.status?.toLowerCase() === 'completed' ? 'bg-blue-100 text-blue-700' :
+                      'bg-gray-100 text-gray-700'
+                  }`}>
+                  {contract.status || 'Unknown'}
+                </span>
               </div>
             </div>
-          ))}
-        </div>
+
+            <div className="space-y-4">
+              <h3 className="text-xl font-bold text-gray-900 mb-4">Milestones</h3>
+              {(contract.milestones || []).map((m, idx) => (
+                <div key={idx} className="bg-gray-50 rounded-xl p-5 border border-gray-100">
+                  <div className="space-y-3">
+                    <div className="flex items-start justify-between">
+                      <div className="flex-1">
+                        <p className="text-sm text-gray-500 mb-1">Stage {idx + 1}</p>
+                        <p className="text-lg font-semibold text-gray-900">{m.stage || `Milestone ${idx + 1}`}</p>
+                        {m.description && (
+                          <p className="text-gray-600 text-sm mt-1">{m.description}</p>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-2 ml-4">
+                        {m.completed ? (
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-green-100 text-green-700 rounded-full text-sm font-semibold">
+                            <FaCheckCircle /> Completed
+                          </span>
+                        ) : m.completionRequested ? (
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-yellow-100 text-yellow-700 rounded-full text-sm font-semibold">
+                            <FaClock /> Pending
+                          </span>
+                        ) : (
+                          <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-gray-200 text-gray-700 rounded-full text-sm font-semibold">
+                            <FaTimes /> Not Requested
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {!m.completed && !m.completionRequested && (
+                      <button
+                        onClick={() => requestMilestoneCompletion(contract._id, idx)}
+                        className="w-full bg-black text-white px-4 py-2 rounded-lg font-medium hover:bg-gray-800 transition-all text-sm"
+                      >
+                        Request Completion
+                      </button>
+                    )}
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );

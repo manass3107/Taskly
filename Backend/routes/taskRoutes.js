@@ -10,10 +10,6 @@ router.post('/', authMiddleware, async (req, res) => {
       return res.status(401).json({ error: 'Authentication required. Please log in again.' });
     }
 
-    if (req.user.role !== 'poster') {
-      return res.status(403).json({ error: 'Only posters can create tasks.' });
-    }
-
     const task = new Task({
       ...req.body,
       postedBy: req.user._id,
@@ -44,22 +40,22 @@ router.get('/open', async (req, res) => {
   try {
     const currentDate = new Date();
     console.log("Current date:", currentDate);
-    
+
     const expiredTasks = await Task.find({ status: 'open', deadline: { $lt: currentDate } });
     console.log("Found expired tasks:", expiredTasks.length);
     expiredTasks.forEach(t => console.log(`- ${t.title}: deadline ${t.deadline}`));
-    
+
     const updateResult = await Task.updateMany(
       { status: 'open', deadline: { $lt: currentDate } },
       { $set: { status: 'expired' } }
     );
     console.log("Updated tasks:", updateResult.modifiedCount);
-    
+
     const tasks = await Task.find({ status: 'open' })
       .populate('postedBy', 'name email')
       .sort({ createdAt: -1 });
     console.log("Returning open tasks:", tasks.length);
-    
+
     res.json(tasks);
   } catch (err) {
     console.error("Error:", err);
@@ -71,12 +67,12 @@ router.get('/open', async (req, res) => {
 router.get('/my-tasks', authMiddleware, async (req, res) => {
   try {
     const currentDate = new Date();
-    
+
     await Task.updateMany(
       { postedBy: req.user._id, status: 'open', deadline: { $lt: currentDate } },
       { $set: { status: 'expired' } }
     );
-    
+
     const myTasks = await Task.find({ postedBy: req.user._id })
       .sort({ createdAt: -1 });
     res.json(myTasks);

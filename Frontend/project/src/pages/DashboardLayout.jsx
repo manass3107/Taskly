@@ -13,7 +13,6 @@ const DashboardLayout = ({ children }) => {
     const userId = localStorage.getItem("userId");
 
     if (!token || !userId) {
-      console.log("⛔ No token or userId — redirecting");
       navigate("/login");
       return;
     }
@@ -21,19 +20,12 @@ const DashboardLayout = ({ children }) => {
     const fetchUser = async () => {
       try {
         const res = await axios.get(`${API_BASE}/api/users/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: { Authorization: `Bearer ${token}` }
         });
         setUser(res.data);
-
-        // Keep localStorage in sync
-        localStorage.setItem("user", JSON.stringify(res.data));
-        localStorage.setItem("userName", res.data.name);
-        localStorage.setItem("userEmail", res.data.email);
-        localStorage.setItem("userRole", res.data.role);
       } catch (err) {
-        console.error("⚠️ Error fetching user:", err);
+        console.error("Error fetching user:", err);
+        localStorage.clear();
         navigate("/login");
       }
     };
@@ -47,13 +39,11 @@ const DashboardLayout = ({ children }) => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-gray-50 text-gray-900">
       <Navbar user={user} onLogout={handleLogout} />
-      <div className="p-4">
-        <div className="max-w-7xl mx-auto">
-          {children}
-        </div>
-      </div>
+      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 animate-fade-in">
+        {children}
+      </main>
     </div>
   );
 };
