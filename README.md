@@ -1,8 +1,8 @@
-# 🚀 Taskly -Modern Freelance Marketplace
+# 🚀 Taskly - Modern Freelance Marketplace
 
 <div align="center">
 
-**A modern, milestone-based freelance platform built with the MERN stack**
+**A modern, milestone-based freelance platform with a clean, intuitive interface**
 
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 [![MongoDB](https://img.shields.io/badge/MongoDB-4EA94B?logo=mongodb&logoColor=white)](https://www.mongodb.com/)
@@ -18,37 +18,47 @@
 
 ## 🌟 Overview
 
-**Taskly** revolutionizes freelance collaboration by introducing a **trust-based milestone payment system**. Posters create tasks, workers submit competitive offers, and both parties collaborate through secure contracts with progressive payments.
+**Taskly** revolutionizes freelance collaboration by introducing a **trust-based milestone payment system** with a beautiful, modern interface. Users can create tasks, submit competitive offers, and collaborate through secure contracts with progressive payments - all in one unified account.
 
 ### 💡 What Makes Taskly Different?
 
+- **🎨 Clean Modern UI**: Beautiful light theme with intuitive navigation and smooth animations
 - **🛡️ Risk Mitigation**: Pay-as-you-go milestone system protects both parties
-- **💰 Quality Assurance**: Workers pay a small participation fee (refunded if rejected) to ensure serious applications
-- **🔄 Seamless Role Switching**: One account, multiple roles - be both a poster and a worker
-- **📊 Complete Transparency**: Full transaction history and wallet integration
+- **💰 Quality Assurance**: Participation fee mechanism ensures serious applications
+- **🔄 Unified Account**: One account for all activities - post tasks, work on tasks, manage contracts
+- **📊 Complete Transparency**: Full transaction history and integrated wallet system
 - **⚡ Real-time Updates**: Stay informed about offers, milestones, and payments
 
 ---
 
 ## ✨ Key Features
 
-### 🔐 **Advanced Authentication & Authorization**
+### 🎨 **Modern User Interface**
+- Clean, light theme with professional aesthetics
+- Responsive design that works on all devices
+- Smooth animations and transitions
+- Intuitive navigation with clear visual hierarchy
+- Beautiful landing page showcasing platform benefits
+
+### 🔐 **Secure Authentication**
 - JWT-based stateless authentication
-- Role-based access control (Poster, Worker, Admin)
 - Secure password hashing with bcrypt (10 salt rounds)
-- Dynamic role switching without re-authentication
+- Protected routes and API endpoints
+- Session management with token refresh
 
-### 📝 **Task Management**
-- Create tasks with detailed specifications (budget, deadline, component type)
-- Automatic task expiration based on deadlines
-- Filter by technology stack (Backend, Frontend, Full Stack, Database, Deployment)
-- Rich task descriptions and requirements
+### 📝 **Smart Task Management**
+- Create tasks with detailed specifications (budget, deadline, technology stack)
+- Filter by component type (Backend, Frontend, Full Stack, Database, Deployment)
+- Automatic task status tracking
+- Rich task descriptions with markdown support
+- View all your posted tasks in one place
 
-### 💸 **Smart Offer System**
-- Workers submit competitive offers with proposed fees
+### 💸 **Intelligent Offer System**
+- Submit competitive offers with custom proposals
 - **Participation fee mechanism** prevents spam applications
 - Automatic refunds for rejected offers
 - Real-time offer status tracking
+- Compare multiple offers side-by-side
 
 ### 🤝 **Contract & Milestone Engine**
 - **Flexible payment terms**:
@@ -58,6 +68,7 @@
 - Two-step approval process (request → review → approve)
 - Milestone rejection with feedback mechanism
 - Contract status tracking (Active, Completed, Cancelled)
+- Visual milestone progress tracking
 
 ### 💰 **Integrated Wallet System**
 - In-app wallet with real-time balance updates
@@ -71,6 +82,7 @@
 - JWT token verification on all protected routes
 - Input sanitization and validation
 - Secure API endpoints with proper error handling
+- Environment-based configuration
 
 ---
 
@@ -119,7 +131,7 @@
 ### Tech Stack
 
 ```
-Frontend:  React.js + Tailwind CSS
+Frontend:  React.js + Tailwind CSS + Framer Motion
 Backend:   Node.js + Express.js
 Database:  MongoDB + Mongoose ODM
 Auth:      JWT + Bcrypt
@@ -131,7 +143,7 @@ Deployment: Vercel (Frontend) + Render (Backend)
 ```
 ┌─────────────────┐      ┌──────────────────┐      ┌─────────────────┐
 │   React Client  │ ───► │  Express REST API │ ───► │   MongoDB       │
-│   (Vercel)      │      │  (Railway/Render) │      │   (Atlas)       │
+│   (Vercel)      │      │  (Render)         │      │   (Atlas)       │
 └─────────────────┘      └──────────────────┘      └─────────────────┘
         │                          │                         │
         │                    ┌─────▼─────┐                  │
@@ -178,7 +190,7 @@ Contract ──► Milestones (1:N, embedded)
 
 2. **Backend Setup**
    ```bash
-   cd backend
+   cd Backend
    npm install
    ```
 
@@ -197,13 +209,13 @@ Contract ──► Milestones (1:N, embedded)
 
 3. **Frontend Setup**
    ```bash
-   cd ../frontend/project
+   cd ../Frontend/project
    npm install
    ```
 
    Create `.env` file:
    ```env
-   REACT_APP_API_URL=http://localhost:5000/api
+   REACT_APP_API=http://localhost:5000
    ```
 
    Start frontend:
@@ -219,33 +231,54 @@ Contract ──► Milestones (1:N, embedded)
 
 ## 📖 Usage Guide
 
-### 🎭 User Roles
+### 🔄 Complete Workflow
 
-| Role | Capabilities |
-|------|-------------|
-| **Poster** | Create tasks, review offers, accept contracts, release milestone payments |
-| **Worker** | Browse tasks, submit offers, complete milestones, earn payments |
-| **Admin** | Monitor system, resolve disputes *(coming soon)* |
+**Task Journey from Creation to Completion:**
 
-### 🔄 Workflow
+1. **Create a Task** 
+   - Navigate to Dashboard → Create Task
+   - Fill in task details (title, description, budget, deadline)
+   - Set participation fee and choose payment terms (Quarter/Half/Full)
+   - Submit to make it visible to all users
 
-**Complete Task Journey:**
+2. **Browse & Apply to Tasks**
+   - Visit "Open Tasks" to see available opportunities
+   - Review task details, budget, and requirements
+   - Submit an offer with your proposed fee and message
+   - Pay the participation fee (refunded if rejected)
 
-1. **Poster Creates Task** → Sets budget, deadline, participation fee
-2. **Worker Browses & Applies** → Pays participation fee (refunded if rejected)
-3. **Poster Reviews Offers** → Compares proposals from multiple workers
-4. **Poster Accepts Offer** → Contract auto-generated with milestones
-5. **Worker Completes Work** → Submits milestone for review
-6. **Poster Approves** → Payment released automatically to worker's wallet
-7. **Repeat for Each Milestone** → Progressive payment until completion
-8. **Contract Completed** → Both parties have full transaction history
+3. **Review Offers (Task Poster)**
+   - Go to "My Requests" to see your posted tasks
+   - Click on a task to view all received offers
+   - Compare proposals, fees, and applicant profiles
+   - Accept the best offer or reject others
+
+4. **Contract Begins**
+   - System automatically creates a contract upon acceptance
+   - Milestones are generated based on selected payment terms
+   - Both parties receive notifications
+   - View contract details in "My Work" or "My Contracts"
+
+5. **Complete Milestones**
+   - Worker completes work for a milestone
+   - Worker requests milestone completion
+   - Poster reviews the work
+   - Poster approves or rejects with feedback
+   - Payment automatically transfers to worker's wallet upon approval
+
+6. **Project Completion**
+   - Repeat for all milestones
+   - Contract marked as completed when all milestones done
+   - Full transaction history available in Wallet
+   - Both parties can view contract details anytime
 
 ### 💡 Pro Tips
 
-- **Role Switching**: Navigate to Profile → Switch Role to toggle between Poster and Worker
-- **Wallet Management**: Top up your wallet before applying to tasks or accepting offers
-- **Milestone Strategy**: Choose payment terms based on project complexity and trust level
-- **Transaction History**: Review all wallet activities in the Wallet section
+- **Wallet Management**: Always maintain sufficient balance before posting tasks or applying to them
+- **Clear Descriptions**: Provide detailed task descriptions to attract quality offers
+- **Milestone Strategy**: Choose payment terms based on project complexity and budget
+- **Transaction History**: Review all wallet activities in the Wallet section for complete transparency
+- **Profile Setup**: Complete your profile to build credibility with other users
 
 ---
 
@@ -261,23 +294,24 @@ Contract ──► Milestones (1:N, embedded)
 ### Tasks
 - `GET /api/tasks` - Get all tasks
 - `GET /api/tasks/open` - Get open tasks
-- `POST /api/tasks` - Create new task (Poster only)
-- `GET /api/tasks/my-tasks` - Get user's tasks
+- `POST /api/tasks` - Create new task
+- `GET /api/tasks/my-tasks` - Get user's posted tasks
 - `GET /api/tasks/:id` - Get task details
 
 ### Offers
-- `POST /api/offers/:taskId/apply-offer` - Apply to task (Worker only)
+- `POST /api/offers/:taskId/apply-offer` - Apply to task
 - `GET /api/offers/task/:taskId` - Get offers for task
-- `POST /api/offers/:offerId/accept` - Accept offer (Poster only)
-- `POST /api/offers/:offerId/reject` - Reject offer (Poster only)
+- `POST /api/offers/:offerId/accept` - Accept offer
+- `POST /api/offers/:offerId/reject` - Reject offer
 
 ### Contracts
-- `GET /api/contracts/my-contracts` - Get worker contracts
-- `GET /api/contracts/my-posted-contracts` - Get poster contracts
+- `GET /api/contracts/my-contracts` - Get contracts where user is worker
+- `GET /api/contracts/my-posted-contracts` - Get contracts where user is poster
 - `GET /api/contracts/view/:contractId` - View contract details
 - `POST /api/contracts/:contractId/milestones/:index/request-completion` - Request milestone approval
 - `POST /api/contracts/:contractId/milestones/:index/approve` - Approve milestone
 - `POST /api/contracts/:contractId/milestones/:index/reject` - Reject milestone
+- `POST /api/contracts/:contractId/complete` - Mark contract as completed
 
 ### Wallet
 - `POST /api/users/topup` - Top up wallet
@@ -287,7 +321,6 @@ Contract ──► Milestones (1:N, embedded)
 ### Profile
 - `GET /api/profile` - Get user profile
 - `PUT /api/profile` - Update profile
-- `PATCH /api/users/switch-role` - Switch user role
 
 </details>
 
@@ -302,17 +335,19 @@ Contract ──► Milestones (1:N, embedded)
 - ✅ JWT middleware for route protection
 - ✅ Bcrypt password hashing with salt rounds
 - ✅ CORS configuration for secure cross-origin requests
-- ✅ Comprehensive error handling
+- ✅ Comprehensive error handling and validation
 - ✅ Transaction history with complete audit trail
 
 ### Frontend
 - ✅ React functional components with hooks
+- ✅ **Clean light theme** with consistent design system
 - ✅ Tailwind CSS for responsive, modern UI
-- ✅ Axios interceptors for global error handling
+- ✅ Framer Motion for smooth animations
+- ✅ Axios for API communication
 - ✅ LocalStorage for JWT token management
 - ✅ Protected routes with authentication checks
 - ✅ Real-time balance updates
-- ✅ Dynamic role-based UI rendering
+- ✅ Responsive design for mobile and desktop
 
 ---
 
@@ -324,6 +359,7 @@ Contract ──► Milestones (1:N, embedded)
 - [x] Offer submission system
 - [x] Contract and milestone engine
 - [x] Wallet integration
+- [x] Clean, modern UI with light theme
 
 ### Phase 2: Enhancements 🚧
 - [ ] MongoDB transactions for atomic payments
@@ -334,12 +370,13 @@ Contract ──► Milestones (1:N, embedded)
 - [ ] Rating and review system
 
 ### Phase 3: Advanced Features 🔮
-- [ ] Admin dashboard for dispute resolution
+- [ ] Dispute resolution system
 - [ ] Payment gateway integration (Stripe/Razorpay)
-- [ ] Analytics and reporting
+- [ ] Analytics and reporting dashboard
 - [ ] Mobile application (React Native)
 - [ ] AI-powered task matching
 - [ ] Multi-currency support
+- [ ] Dark mode toggle
 
 ---
 
@@ -382,6 +419,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - MongoDB for the excellent NoSQL database
 - Express.js team for the minimalist web framework
 - React team for the amazing UI library
+- Tailwind CSS for the utility-first CSS framework
 - Node.js community for the robust runtime environment
 - All open-source contributors who made this project possible
 
