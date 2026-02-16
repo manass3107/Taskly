@@ -11,6 +11,7 @@ const CreateTaskPage = () => {
   const [participationFee, setParticipationFee] = useState('');
   const [componentType, setComponentType] = useState('');
   const [deadline, setDeadline] = useState('');
+  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState('');
   const navigate = useNavigate();
 

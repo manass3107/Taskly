@@ -23,7 +23,7 @@ function AcceptOffer() {
       return;
     }
     fetchOffers(token);
-  }, [taskId, navigate]);
+  }, [taskId, navigate, fetchOffers]);
 
   const fetchOffers = async (token) => {
     try {
@@ -274,11 +274,10 @@ function AcceptOffer() {
           <div className="fixed inset-0 bg-black/70 backdrop-blur-sm flex items-center justify-center z-50 p-4">
             <div className="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 max-w-md w-full animate-modal-in">
               <div className="text-center">
-                <div className={`w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center ${
-                  actionType === 'accept' 
-                    ? 'bg-gradient-to-br from-green-500 to-emerald-500' 
+                <div className={`w-16 h-16 mx-auto mb-6 rounded-full flex items-center justify-center ${actionType === 'accept'
+                    ? 'bg-gradient-to-br from-green-500 to-emerald-500'
                     : 'bg-gradient-to-br from-red-500 to-pink-500'
-                }`}>
+                  }`}>
                   {actionType === 'accept' ? (
                     <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -289,11 +288,11 @@ function AcceptOffer() {
                     </svg>
                   )}
                 </div>
-                
+
                 <h3 className="text-2xl font-bold text-white mb-4">
                   {actionType === 'accept' ? 'Confirm Acceptance' : 'Confirm Rejection'}
                 </h3>
-                
+
                 <p className="text-purple-200 mb-8">
                   Are you sure you want to{' '}
                   <strong>{actionType === 'accept' ? 'accept' : 'reject'}</strong> the offer from{' '}
@@ -308,11 +307,10 @@ function AcceptOffer() {
                     Cancel
                   </button>
                   <button
-                    className={`flex-1 font-semibold py-3 px-6 rounded-xl transition-all duration-300 ${
-                      actionType === 'accept'
+                    className={`flex-1 font-semibold py-3 px-6 rounded-xl transition-all duration-300 ${actionType === 'accept'
                         ? 'bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-400 hover:to-emerald-400 text-white'
                         : 'bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-400 hover:to-pink-400 text-white'
-                    }`}
+                      }`}
                     onClick={handleConfirm}
                   >
                     Yes

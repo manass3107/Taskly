@@ -11,6 +11,7 @@ const DashboardPage = () => {
   const [user, setUser] = useState(null);
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
+  // eslint-disable-next-line no-unused-vars
   const [message, setMessage] = useState("");
 
   useEffect(() => {
