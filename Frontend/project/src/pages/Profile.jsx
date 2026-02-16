@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { FaUser, FaWallet, FaEdit, FaPlus, FaSignOutAlt } from 'react-icons/fa';
 
 function Profile() {

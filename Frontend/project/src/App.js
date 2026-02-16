@@ -7,7 +7,6 @@ import Dashboard from './pages/Dashboard';
 import CreateTaskPage from './pages/CreateTaskPage';
 import Offers from './pages/Offers';
 import AcceptOffer from './pages/AcceptOffer';
-import TaskList from './pages/TaskList';
 import TaskDetail from './pages/TaskDetail';
 import Wallet from './pages/Wallet';
 import TasksPage from './pages/TasksPage';

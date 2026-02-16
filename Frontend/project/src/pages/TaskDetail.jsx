@@ -12,15 +12,6 @@ const TaskDetail = () => {
   const [task, setTask] = useState(null);
   const [loading, setLoading] = useState(true);
   const [message, setMessage] = useState('');
-  const [currentUser, setCurrentUser] = useState(null);
-
-  useEffect(() => {
-    const userId = localStorage.getItem('userId');
-    const userRole = localStorage.getItem('userRole');
-    if (userId && userRole) {
-      setCurrentUser({ _id: userId, role: userRole });
-    }
-  }, []);
 
   const fetchTask = useCallback(async () => {
     const token = localStorage.getItem('token');
@@ -47,7 +38,7 @@ const TaskDetail = () => {
     } finally {
       setLoading(false);
     }
-  }, [taskId]);
+  }, [taskId, navigate]);
 
   useEffect(() => {
     fetchTask();

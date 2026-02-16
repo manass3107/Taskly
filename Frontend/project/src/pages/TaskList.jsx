@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { motion, AnimatePresence } from 'framer-motion';
-import { FaCalendarAlt, FaMoneyBillWave, FaClock } from 'react-icons/fa';
+import { motion } from 'framer-motion';
+import { FaCalendarAlt, FaMoneyBillWave } from 'react-icons/fa';
 
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
@@ -101,10 +101,10 @@ const TaskList = ({ showMyTasks = false }) => {
               <div className="space-y-4">
                 <div className="flex justify-between items-start">
                   <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold border ${task.status === 'completed'
-                      ? 'bg-green-50 text-green-700 border-green-100'
-                      : task.status === 'in_progress'
-                        ? 'bg-yellow-50 text-yellow-700 border-yellow-100'
-                        : 'bg-blue-50 text-blue-700 border-blue-100'
+                    ? 'bg-green-50 text-green-700 border-green-100'
+                    : task.status === 'in_progress'
+                      ? 'bg-yellow-50 text-yellow-700 border-yellow-100'
+                      : 'bg-blue-50 text-blue-700 border-blue-100'
                     }`}>
                     {task.status.replace('_', ' ').toUpperCase()}
                   </span>
