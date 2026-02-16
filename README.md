@@ -89,12 +89,26 @@
 ## 📸 Screenshots
 
 <details>
+<summary>🎨 Landing Page</summary>
+
+### Welcome Page
+Beautiful landing page showcasing Taskly's features and benefits with modern design.
+
+![Welcome Page](https://taskly-gold.vercel.app/screenshots/Welcome%20page.png)
+
+</details>
+
+<details>
 <summary>🔐 Authentication</summary>
 
 ### Login Page
+Clean login interface with email and password authentication.
+
 ![Login](https://taskly-gold.vercel.app/screenshots/Login.png)
 
 ### Signup Page
+User registration with name, email, and password fields.
+
 ![Signup](https://taskly-gold.vercel.app/screenshots/Signup.png)
 
 </details>
@@ -103,12 +117,18 @@
 <summary>🏠 Dashboard & Core Features</summary>
 
 ### Dashboard
+Comprehensive dashboard showing user statistics, wallet balance, and quick action cards.
+
 ![Dashboard](https://taskly-gold.vercel.app/screenshots/Dashboard.png)
 
 ### Create a Task
+Intuitive task creation form with budget, deadline, and technology stack specification.
+
 ![Create a Task](https://taskly-gold.vercel.app/screenshots/Create%20a%20Task.png)
 
 ### Open Jobs
+Browse all available tasks with filtering options by component type.
+
 ![Open Jobs](https://taskly-gold.vercel.app/screenshots/Open%20Jobs.png)
 
 </details>
@@ -117,9 +137,13 @@
 <summary>💼 Contracts & Payments</summary>
 
 ### Contract Details
-![Contract Details](https://taskly-gold.vercel.app/screenshots/ContractDetails.png)
+View contract milestones, payment terms, and approve/request milestone completion.
+
+![Contract Details](https://taskly-gold.vercel.app/screenshots/Contract%20Details.png)
 
 ### Wallet
+Integrated wallet showing current balance and complete transaction history.
+
 ![Wallet](https://taskly-gold.vercel.app/screenshots/Wallet.png)
 
 </details>
