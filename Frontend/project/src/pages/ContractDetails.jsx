@@ -89,13 +89,13 @@ function ContractDetails() {
 
             <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
               <p className="text-sm text-gray-500 mb-2">Payment</p>
-              <p className="text-2xl font-bold text-gray-900">₹{contract.acceptedOffer.amount}</p>
+              <p className="text-2xl font-bold text-gray-900">₹{contract.acceptedOffer.proposedFee}</p>
             </div>
 
             <div className="bg-gray-50 rounded-xl p-5 border border-gray-100">
               <p className="text-sm text-gray-500 mb-2">Deadline</p>
               <p className="text-lg font-semibold text-gray-900">
-                {new Date(contract.deadline).toLocaleDateString()}
+                {new Date(contract.taskId.deadline).toLocaleDateString()}
               </p>
             </div>
           </div>
