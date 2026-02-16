@@ -1,5 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
-import { FaWallet, FaTasks, FaUserCircle, FaSignOutAlt, FaClipboardList, FaBriefcase } from 'react-icons/fa';
+import { FaWallet, FaTasks, FaClipboardList, FaBriefcase } from 'react-icons/fa';
 
 const Navbar = ({ user, onLogout }) => {
   const location = useLocation();

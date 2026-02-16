@@ -108,7 +108,7 @@ const Login = () => {
                 <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">Remember me</label>
               </div>
               <div className="text-sm">
-                <a href="#" className="font-medium text-black hover:underline">Forgot password?</a>
+                <button type="button" className="font-medium text-black hover:underline bg-transparent border-0 cursor-pointer">Forgot password?</button>
               </div>
             </div>
 

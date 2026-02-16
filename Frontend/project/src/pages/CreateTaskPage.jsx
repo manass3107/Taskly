@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { FaEdit, FaMoneyBillWave, FaClock, FaLayerGroup, FaExclamationCircle } from 'react-icons/fa';
 
-const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
+const API_BASE = process.env.REACT_APP_API || "http://localhost:3000";
 
 const CreateTaskPage = () => {
   const [title, setTitle] = useState('');
@@ -11,7 +11,6 @@ const CreateTaskPage = () => {
   const [participationFee, setParticipationFee] = useState('');
   const [componentType, setComponentType] = useState('');
   const [deadline, setDeadline] = useState('');
-  const [error, setError] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {

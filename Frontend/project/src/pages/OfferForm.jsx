@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { FaMoneyBillWave, FaEdit } from 'react-icons/fa';
+import { FaMoneyBillWave } from 'react-icons/fa';
 
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 

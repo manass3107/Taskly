@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaUserTie, FaUserAstronaut, FaWallet, FaBolt, FaChartLine, FaCheckCircle, FaArrowRight } from "react-icons/fa";
+import { FaWallet, FaBolt, FaChartLine, FaCheckCircle, FaArrowRight } from "react-icons/fa";
 
 const API_BASE = process.env.REACT_APP_API || "http://localhost:5000";
 
@@ -11,7 +11,6 @@ const DashboardPage = () => {
   const [user, setUser] = useState(null);
   const [analytics, setAnalytics] = useState(null);
   const [loading, setLoading] = useState(true);
-  const [message, setMessage] = useState("");
 
   useEffect(() => {
     const token = localStorage.getItem("token");
